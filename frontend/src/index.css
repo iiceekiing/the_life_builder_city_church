@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables */
+:root {
+  --church-purple: #030b1f;
+  --church-purple-mid: #050f2c;
+  --church-purple-light: #1a0533;
+  --church-gold: #c9952a;
+  --church-gold-light: #f0c060;
+  --church-dark: #020710;
+}
+
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--church-dark);
+  color: white;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Custom Components */
+.glass-card {
+  @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6;
+}
+
+.glass-card-gold {
+  @apply bg-gradient-to-br from-church-gold/10 to-church-gold/5 backdrop-blur-md border border-church-gold/20 rounded-2xl p-6;
+}
+
+.btn-gold {
+  @apply bg-gradient-to-r from-church-gold to-church-gold-light text-church-dark font-bold px-6 py-3 rounded-full hover:shadow-lg hover:shadow-church-gold/25 transition-all duration-300 inline-flex items-center justify-center;
+}
+
+.btn-outline-gold {
+  @apply border border-church-gold text-church-gold font-medium px-6 py-3 rounded-full hover:bg-church-gold hover:text-church-dark transition-all duration-300 inline-flex items-center justify-center;
+}
+
+.input-field {
+  @apply w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-church-gold focus:bg-white/10 transition-all;
+}
+
+.section-title {
+  @apply font-display text-4xl md:text-5xl font-bold;
+}
+
+.section-subtitle {
+  @apply font-accent text-church-gold text-xs tracking-widest uppercase mb-3;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-church-gold to-church-gold-light bg-clip-text text-transparent;
+}
+
+/* Page Hero */
+.page-hero {
+  @apply relative overflow-hidden;
+}
+
+.page-hero::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-br from-church-purple/20 via-transparent to-church-purple/10 pointer-events-none;
+}
+
+/* Event Card */
+.event-card {
+  @apply glass-card hover:border-church-gold/30 hover:shadow-purple transition-all duration-300 group cursor-pointer;
+}
+
+/* Testimony Card */
+.testimony-card {
+  @apply glass-card hover:border-church-gold/20 hover:shadow-gold transition-all duration-300;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--church-purple-mid);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--church-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--church-gold-light);
+}
+
+/* Animations */
+@keyframes pd {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+/* Line Clamp */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
