@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from app.db.session import get_db
 from app.schemas.schemas import EventResponse, MediaResponse, PastorResponse
-from app.models.event import Event, Media, Pastor
+from app.models.event import Event, Media
+from app.models.appointment import Pastor
 from app.core.security import require_admin_or_team_lead
 
 router = APIRouter()

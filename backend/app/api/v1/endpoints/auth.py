@@ -25,6 +25,7 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
         email=user_data.email,
         phone=user_data.phone,
         department=user_data.department,
+        role=user_data.role or "member",
         hashed_password=hashed_password
     )
     

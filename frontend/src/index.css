@@ -72,12 +72,12 @@ body {
 
 /* Event Card */
 .event-card {
-  @apply glass-card hover:border-church-gold/30 hover:shadow-purple transition-all duration-300 group cursor-pointer;
+  @apply glass-card hover:border-church-gold/30 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300 cursor-pointer;
 }
 
 /* Testimony Card */
 .testimony-card {
-  @apply glass-card hover:border-church-gold/20 hover:shadow-gold transition-all duration-300;
+  @apply glass-card hover:border-church-gold/20 hover:shadow-lg hover:shadow-yellow-500/20 transition-all duration-300;
 }
 
 /* Scrollbar Styles */

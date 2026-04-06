@@ -4,7 +4,7 @@ import json
 
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "postgresql://church_user:church_pass@postgres:5432/church_db"
+    DATABASE_URL: str = "sqlite:///./church.db"  # SQLite for development
     SECRET_KEY: str = "change-this-super-secret-key-in-production"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
