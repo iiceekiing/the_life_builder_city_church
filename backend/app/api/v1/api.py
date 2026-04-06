@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import auth, users, sermons, testimonies, appointments, courses, events, content
+from app.api.v1.endpoints import auth, users, sermons, testimonies, appointments, courses, events, content, admin
 
 api_router = APIRouter()
 
@@ -12,3 +12,4 @@ api_router.include_router(appointments.router, prefix="/appointments", tags=["ap
 api_router.include_router(courses.router, prefix="/courses", tags=["courses"])
 api_router.include_router(events.router, prefix="/events", tags=["events"])
 api_router.include_router(content.router, prefix="/content", tags=["content"])
+api_router.include_router(admin.router, prefix="/admin", tags=["admin"])
