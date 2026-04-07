@@ -1,10 +1,28 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import ChurchBackground from '../ui/ChurchBackground'
 
-const HeroSection = ({ quotes }) => {
+// Hero background images array
+const HERO_IMAGES = [
+  '/images/hero_section_bg.jpeg',
+  '/images/hero_section_bg3.jpeg',
+  '/images/hero_section_bg4.jpeg',
+  '/images/hero_section_bg5.jpeg',
+  '/images/hero_section_bg6.jpeg',
+  '/images/hero_section_bg7.jpeg',
+  '/images/hero_section_bg8.jpeg',
+  '/images/hero_section_bg9.jpeg',
+  '/images/hero_section_bg10.jpeg',
+  '/images/hero_section_bg11.jpeg',
+  '/images/hero_section_bg12.jpeg'
+]
+
+const HeroSection = ({ quotes, imageOpacity = 0.28 }) => {
   const [quoteIdx, setQuoteIdx] = useState(0)
+  const [imageIdx, setImageIdx] = useState(0)
 
+  // Quote rotation - every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setQuoteIdx(i => (i + 1) % quotes.length)
@@ -12,18 +30,85 @@ const HeroSection = ({ quotes }) => {
     return () => clearInterval(interval)
   }, [quotes.length])
 
+  // Image rotation - every 15 seconds (longer display time)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImageIdx(i => (i + 1) % HERO_IMAGES.length)
+    }, 15000) // 15 seconds for longer display time
+    return () => clearInterval(interval)
+  }, [])
+
+  // Get current image based on image index (separate from quote index)
+  const currentImage = HERO_IMAGES[imageIdx]
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-church-dark/80 via-church-dark/60 to-church-dark" />
-      <div className="absolute inset-0 bg-gradient-to-r from-church-purple/60 via-transparent to-church-purple/40" />
+    <section style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
 
-      {/* Decorative orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-church-gold/5 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-church-purple-light/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
+      {/* Layer 1 - Animated star/bokeh/glow canvas */}
+      <ChurchBackground />
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+      {/* Layer 2 - Church photo, semi-transparent with synchronized transitions */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 1,
+      }}>
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentImage}
+            src={currentImage}
+            alt=""
+            aria-hidden="true"
+            initial={{ scale: 1.08, opacity: 0 }}
+            animate={{ scale: 1.0, opacity: imageOpacity }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={{ 
+              duration: 3.0, // Twice as slow (3 seconds instead of 1.5)
+              ease: 'easeInOut',
+              opacity: { duration: 2.4 }, // Slower opacity transition
+              scale: { duration: 8 }
+            }}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center top',
+              display: 'block',
+            }}
+          />
+        </AnimatePresence>
+      </div>
+
+      {/* Layer 3 - Dark gradient overlay for text readability */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 2,
+        background: `
+          linear-gradient(
+            to bottom,
+            rgba(3,11,31,0.55) 0%,
+            rgba(3,11,31,0.35) 40%,
+            rgba(3,11,31,0.70) 80%,
+            rgba(3,11,31,0.95) 100%
+          )
+        `,
+      }} />
+
+      {/* Mask baked-in text with subtle dark gradient patch */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: '20%',
+        right: '20%',
+        height: '55%',
+        background: 'linear-gradient(to bottom, rgba(3,11,31,0.7) 0%, transparent 100%)',
+        zIndex: 2,
+        pointerEvents: 'none',
+      }} />
+
+      {/* Layer 4 - Hero text content */}
+      <div style={{ position: 'relative', zIndex: 3 }} className="text-center px-4 max-w-5xl mx-auto flex flex-col items-center justify-center min-h-screen">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -102,22 +187,22 @@ const HeroSection = ({ quotes }) => {
             Book Appointment
           </Link>
         </motion.div>
-      </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="font-accent text-white/30 text-xs tracking-widest uppercase">Scroll</span>
+        {/* Scroll indicator */}
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          className="w-px h-8 bg-gradient-to-b from-church-gold/60 to-transparent"
-        />
-      </motion.div>
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <span className="font-accent text-white/30 text-xs tracking-widest uppercase">Scroll</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+            className="w-px h-8 bg-gradient-to-b from-church-gold/60 to-transparent"
+          />
+        </motion.div>
+      </div>
     </section>
   )
 }

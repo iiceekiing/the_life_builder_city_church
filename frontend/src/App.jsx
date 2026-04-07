@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SermonsPreviewSection from './components/sections/SermonsPreviewSection'
+import TestimoniesSection from './components/sections/TestimoniesSection'
+import HeroSection from './components/sections/HeroSection'
 
 const DEFAULT = {
   starCount: 220,
@@ -587,19 +589,21 @@ const SimpleHero = () => {
 function App() {
   return (
     <div style={{ minHeight: '100vh' }}>
-      {/* Fixed behind everything — persists across route changes */}
-      <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>
-        <ChurchBackground />
-      </div>
-
       {/* All page content above it */}
       <div style={{ position: 'relative', zIndex: 1 }}>
         <SimpleNavbar />
         <Routes>
           <Route path="/" element={<>
-            <SimpleHero />
+            <HeroSection quotes={[
+              "From now on, you are now part of our family",
+              "The WORD OF GOD is our celebrity", 
+              "We always bring our best",
+              "Your destiny is our priority",
+              "Building lives, building destiny"
+            ]} />
             <HomeImageFlow />
             <SermonsPreviewSection />
+            <TestimoniesSection />
           </>} />
           <Route path="/sermons" element={
             <div className="container mx-auto px-4 py-8">
