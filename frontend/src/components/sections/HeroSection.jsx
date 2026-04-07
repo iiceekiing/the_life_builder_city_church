@@ -120,6 +120,13 @@ const HeroSection = ({ quotes, imageOpacity = 0.28 }) => {
           <span className="font-accent text-church-gold text-xs tracking-[0.3em] uppercase">Welcome Home</span>
         </motion.div>
 
+        {/* Welcome Home Button - Above Church Name */}
+        <div className="flex justify-center mb-4">
+          <Link to="/" className="text-church-gold hover:text-church-gold/80 transition-colors duration-300">
+            Welcome Home
+          </Link>
+        </div>
+
         {/* Church Name */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -174,19 +181,19 @@ const HeroSection = ({ quotes, imageOpacity = 0.28 }) => {
         </div>
 
         {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
-          <Link to="/sermons" className="btn-gold text-base px-8 py-4">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-16">
+          <a 
+            href="https://www.youtube.com/@glory-life-church" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="btn-gold text-base px-8 py-4"
+          >
             Watch Sermons
+          </a>
+          <Link to="/partnership" className="btn-outline-gold text-base px-8 py-4">
+            Partner With Us
           </Link>
-          <Link to="/appointments" className="btn-outline-gold text-base px-8 py-4">
-            Book Appointment
-          </Link>
-        </motion.div>
+        </div>
 
         {/* Scroll indicator */}
         <motion.div

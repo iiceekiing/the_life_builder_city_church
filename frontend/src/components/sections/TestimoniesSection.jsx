@@ -54,15 +54,22 @@ const DEMO_TESTIMONIES = [
   }
 ]
 
-const TestimonyCard = ({ testimony, isHovered, onHover, onLeave, onClick }) => {
+const TestimonyCard = ({ testimony, isHovered, onHover, onLeave, onClick, size = 'normal' }) => {
   const truncateText = (text, maxLength = 120) => {
     if (text.length <= maxLength) return text
     return text.substring(0, maxLength) + '...'
   }
 
+  // Size classes based on row
+  const sizeClasses = {
+    normal: 'min-w-[300px] max-w-[320px] p-6',
+    small: 'min-w-[210px] max-w-[224px] p-4', // 30% smaller
+    xsmall: 'min-w-[120px] max-w-[128px] p-3' // 60% smaller
+  }
+
   return (
     <motion.div
-      className="bg-church-dark/80 backdrop-blur-sm rounded-2xl border-l-2 border-l-church-gold p-6 min-w-[300px] max-w-[320px] cursor-pointer transition-all duration-300"
+      className={`bg-church-dark/80 backdrop-blur-sm rounded-2xl border-l-2 border-l-church-gold cursor-pointer transition-all duration-300 ${sizeClasses[size]}`}
       whileHover={{ 
         scale: 1.05, 
         boxShadow: '0 10px 30px rgba(255, 215, 0, 0.3)',
@@ -96,7 +103,7 @@ const TestimonyCard = ({ testimony, isHovered, onHover, onLeave, onClick }) => {
 }
 
 const TestimoniesSection = () => {
-  const [testimonies, setTestimonies] = useState(DEMO_TESTIMONIES)
+  const [testimonies, setTestimonies] = useState([...DEMO_TESTIMONIES.slice(0, 3), ...DEMO_TESTIMONIES.slice(0, 3)])
   const [loading, setLoading] = useState(true)
   const [hoveredCardId, setHoveredCardId] = useState(null)
   const [selectedTestimony, setSelectedTestimony] = useState(null)
@@ -111,16 +118,16 @@ const TestimoniesSection = () => {
         const response = await fetch('/api/v1/testimonies?limit=12')
         if (response.ok) {
           const data = await response.json()
-          // Duplicate for seamless loop
-          setTestimonies([...data, ...data])
+          // Use fewer testimonies for less cards on screen
+          setTestimonies([...data.slice(0, 3), ...data.slice(0, 3)])
         } else {
-          // Use demo data and duplicate for seamless loop
-          setTestimonies([...DEMO_TESTIMONIES, ...DEMO_TESTIMONIES])
+          // Use demo data with fewer testimonies
+          setTestimonies([...DEMO_TESTIMONIES.slice(0, 3), ...DEMO_TESTIMONIES.slice(0, 3)])
         }
       } catch (error) {
         console.error('Error fetching testimonies:', error)
-        // Use demo data and duplicate for seamless loop
-        setTestimonies([...DEMO_TESTIMONIES, ...DEMO_TESTIMONIES])
+        // Use demo data with fewer testimonies
+        setTestimonies([...DEMO_TESTIMONIES.slice(0, 3), ...DEMO_TESTIMONIES.slice(0, 3)])
       } finally {
         setLoading(false)
       }
@@ -180,49 +187,28 @@ const TestimoniesSection = () => {
           </div>
         ) : (
           <div className="relative">
-            {/* Top Row - Scrolling Left */}
-            <div className="mb-8 overflow-hidden">
-              <div 
-                className={`flex gap-6 ${isPaused ? 'animation-paused' : ''}`}
-                style={{
-                  animation: isPaused ? 'none' : 'marquee-left 60s linear infinite',
-                  width: 'max-content'
-                }}
-              >
-                {[...testimonies, ...testimonies].map((testimony, index) => (
-                  <TestimonyCard
-                    key={`top-${testimony.id}-${index}`}
-                    testimony={testimony}
-                    isHovered={hoveredCardId === testimony.id}
-                    onHover={setHoveredCardId}
-                    onLeave={() => setHoveredCardId(null)}
-                    onClick={handleCardClick}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Bottom Row - Scrolling Right */}
-            <div className="overflow-hidden">
-              <div 
-                className={`flex gap-6 ${isPaused ? 'animation-paused' : ''}`}
-                style={{
-                  animation: isPaused ? 'none' : 'marquee-right 60s linear infinite',
-                  width: 'max-content'
-                }}
-              >
-                {[...testimonies, ...testimonies].reverse().map((testimony, index) => (
-                  <TestimonyCard
-                    key={`bottom-${testimony.id}-${index}`}
-                    testimony={testimony}
-                    isHovered={hoveredCardId === testimony.id}
-                    onHover={setHoveredCardId}
-                    onLeave={() => setHoveredCardId(null)}
-                    onClick={handleCardClick}
-                  />
-                ))}
-              </div>
-            </div>
+            {/* Testimony Cards - First Row Only */}
+        <div className="overflow-hidden">
+          <div 
+            className={`flex gap-6 ${isPaused ? 'animation-paused' : ''}`}
+            style={{
+              animation: isPaused ? 'none' : 'marquee-left 60s linear infinite',
+              width: 'max-content'
+            }}
+          >
+            {[...testimonies, ...testimonies].map((testimony, index) => (
+              <TestimonyCard
+                key={`top-${testimony.id}-${index}`}
+                testimony={testimony}
+                isHovered={hoveredCardId === testimony.id}
+                onHover={setHoveredCardId}
+                onLeave={() => setHoveredCardId(null)}
+                onClick={handleCardClick}
+                size="small" // 30% smaller
+              />
+            ))}
+          </div>
+        </div>
           </div>
         )}
 

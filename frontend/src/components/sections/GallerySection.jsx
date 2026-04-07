@@ -28,14 +28,14 @@ const GallerySection = () => {
   ]
 
   useEffect(() => {
-    // Initialize visible images
-    setVisibleImages(initialImages.slice(0, 16))
-    setImageQueue(initialImages.slice(16))
+    // Initialize visible images - only first row
+    setVisibleImages(initialImages.slice(0, 8))
+    setImageQueue(initialImages.slice(8))
 
-    // Auto-rotate active image
+    // Auto-rotate active image - much slower
     const interval = setInterval(() => {
-      setActiveIndex(prev => (prev + 1) % 16)
-    }, 2500)
+      setActiveIndex(prev => (prev + 1) % 8)
+    }, 8000) // Much slower: 8 seconds instead of 2.5
 
     return () => clearInterval(interval)
   }, [])
@@ -50,10 +50,10 @@ const GallerySection = () => {
   }, [])
 
   useEffect(() => {
-    // Seamless image replacement
+    // Seamless image replacement - only first row
     const replacementInterval = setInterval(() => {
       if (imageQueue.length > 0) {
-        const randomIndex = Math.floor(Math.random() * 16)
+        const randomIndex = Math.floor(Math.random() * 8)
         const newImage = imageQueue[0]
         
         setVisibleImages(prev => {

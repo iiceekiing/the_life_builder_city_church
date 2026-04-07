@@ -230,7 +230,7 @@ const SermonCard = ({
       onClick={() => onClick(sermon.id)}
     >
       {/* Thumbnail Section */}
-      <div className="relative aspect-[3/4] bg-church-purple/50 group">
+      <div className="relative aspect-[1/1] bg-church-purple/50 group">
         {/* Sermon thumbnail image */}
         {sermon.thumbnail_url ? (
           <img 
@@ -262,11 +262,11 @@ const SermonCard = ({
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           {isActiveCard ? (
             <motion.div
-              className="w-20 h-20 bg-church-gold rounded-full flex items-center justify-center"
+              className="w-12 h-12 bg-church-gold rounded-full flex items-center justify-center"
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 1, repeat: Infinity }}
             >
-              <svg className="w-8 h-8 text-church-dark" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-church-dark" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
               </svg>
             </motion.div>
@@ -286,7 +286,7 @@ const SermonCard = ({
       </div>
       
       {/* Content Section */}
-      <div className="p-6">
+      <div className="p-4">
         <div className="mb-2">
           <span className="text-church-gold text-sm font-bold">
             {sermon.category.name}
@@ -333,7 +333,7 @@ const SermonCard = ({
               e.stopPropagation()
               setShowDownloadModal(true)
             }}
-            className="flex-1 py-2 px-4 bg-church-purple text-white rounded-lg font-medium hover:bg-church-purple/80 transition-colors"
+            className="flex-1 py-1 px-4 bg-church-purple text-white rounded-lg font-medium hover:bg-church-purple/80 transition-colors"
           >
             <span className="flex items-center justify-center gap-2">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -496,7 +496,7 @@ const SermonCard = ({
 }
 
 const SermonsPreviewSection = () => {
-  const [sermons, setSermons] = useState(DEMO_SERMONS)
+  const [sermons, setSermons] = useState(DEMO_SERMONS.slice(0, 6))
   const [hoveredId, setHoveredId] = useState(null)
   const [activeId, setActiveId] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -590,18 +590,19 @@ const SermonsPreviewSection = () => {
   }
   
   return (
-    <section ref={sectionRef} className="relative py-16">
+    <section className="relative py-24 px-6" style={{ 
+      backgroundColor: '#ffffff'
+    }}>
       {/* Church Background */}
       <div className="absolute inset-0">
         {/* ChurchBackground component would go here */}
-        <div className="w-full h-full bg-gradient-to-br from-church-purple/20 to-church-dark/20" />
       </div>
       
-      <div className="relative container mx-auto px-4">
+      <div className="relative z-10">
         {/* Section Heading */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-accent text-church-gold mb-2">
-            [ THE WORD ]
+          <h2 className="text-3xl md:text-4xl font-accent" style={{ color: '#e1b02a' }}>
+            The Word Of GOD is Our CELEBRITY
           </h2>
           <h3 className="text-2xl md:text-3xl font-serif text-white mb-2">
             Latest Sermons
@@ -617,8 +618,8 @@ const SermonsPreviewSection = () => {
             <div className="text-white">Loading sermons...</div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {sermons.map((sermon) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {sermons.slice(0, 6).map((sermon, index) => (
               <SermonCard
                 key={sermon.id}
                 sermon={sermon}
