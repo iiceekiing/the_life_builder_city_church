@@ -35,7 +35,7 @@ const GallerySection = () => {
     // Auto-rotate active image - much slower
     const interval = setInterval(() => {
       setActiveIndex(prev => (prev + 1) % 8)
-    }, 8000) // Much slower: 8 seconds instead of 2.5
+    }, 15000) // Much slower: 15 seconds instead of 8
 
     return () => clearInterval(interval)
   }, [])

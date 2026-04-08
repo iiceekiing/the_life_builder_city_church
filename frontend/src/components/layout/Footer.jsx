@@ -1,20 +1,31 @@
 import { Link } from 'react-router-dom'
 import { HiLocationMarker, HiPhone, HiMail, HiCalendar } from 'react-icons/hi'
+import { FaTelegram, FaFacebook, FaYoutube } from 'react-icons/fa'
 
 const Footer = () => {
+  const contactInfo = {
+    telegram: 'https://t.me/glorylifechurch',
+    email: 'kingdomportecentre@gmail.com',
+    phone: '+234 704 241 7497',
+    address: 'Korinjoh House, No. 5 Yakubu Gowon Way, Beside Cold Stone (Dominos Pizza), British America, Jos',
+    slogan: 'we are taking over!',
+    facebook: 'https://facebook.com/kingdomportecentre',
+    youtube: 'https://www.youtube.com/@glory-life-church'
+  }
+
   const quickLinks = [
     { name: 'About Us', to: '/about' },
     { name: 'Sermons', to: '/sermons' },
     { name: 'Events', to: '/events' },
     { name: 'Courses', to: '/courses' },
     { name: 'Book Appointment', to: '/appointments' },
-    { name: 'Partner With Us', to: '/partner' },
+    { name: 'Give', to: '/give' },
   ]
 
   const serviceTimes = [
-    { day: 'Sunday', time: '8:00 AM & 10:30 AM', type: 'Services' },
-    { day: 'Wednesday', time: '6:00 PM', type: 'Bible Study' },
-    { day: 'Friday', time: '7:00 PM', type: 'Prayer Meeting' },
+    { day: 'Sunday Celebration Service', start: '8:30 AM', close: '11:30 AM' },
+    { day: 'Wednesday Mid-week Service', start: '5:00 PM', close: '6:30 PM' },
+    { day: 'Friday Prayer Stretch', start: '8:00 PM', close: '' },
   ]
 
   return (
@@ -37,17 +48,49 @@ const Footer = () => {
               A vibrant community of believers committed to building lives and transforming destinies through the power of the Gospel.
             </p>
 
+            {/* Mini Map */}
+            <div className="mb-6 rounded-lg overflow-hidden bg-church-purple/30 h-32 flex items-center justify-center border border-church-gold/20 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-church-purple/50 to-church-dark/30"></div>
+              <div className="relative text-center p-2 z-10">
+                <HiLocationMarker className="text-3xl text-church-gold mx-auto mb-2 drop-shadow-lg" />
+                <p className="text-white/80 text-xs font-medium">Korinjoh House, Yakubu Gowon Way</p>
+                <p className="text-church-gold text-xs font-bold">Jos, Nigeria</p>
+              </div>
+            </div>
+
+            {/* Slogan */}
+            <div className="glass-card-gold px-4 py-2 inline-block">
+              <p className="text-church-gold font-bold text-sm uppercase tracking-wider">
+                {contactInfo.slogan}
+              </p>
+            </div>
+
             {/* Social Links */}
             <div className="flex space-x-4">
-              {['Facebook', 'Twitter', 'Instagram', 'YouTube'].map((social) => (
-                <a
-                  key={social}
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-church-gold hover:border-church-gold/30 transition-all"
-                >
-                  <span className="text-xs font-accent">{social[0]}</span>
-                </a>
-              ))}
+              <a
+                href={contactInfo.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-church-gold hover:border-church-gold/30 transition-all"
+              >
+                <FaFacebook className="text-sm" />
+              </a>
+              <a
+                href={contactInfo.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-church-gold hover:border-church-gold/30 transition-all"
+              >
+                <FaYoutube className="text-sm" />
+              </a>
+              <a
+                href={contactInfo.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-church-gold hover:border-church-gold/30 transition-all"
+              >
+                <FaTelegram className="text-sm" />
+              </a>
             </div>
           </div>
 
@@ -74,18 +117,18 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-white/50 text-sm">
                 <HiLocationMarker className="w-4 h-4 text-church-gold mt-0.5 shrink-0" />
-                <span>Life Builder City Church, 12 Kingdom Avenue, Lagos, Nigeria</span>
+                <span>{contactInfo.address}</span>
               </li>
               <li className="flex items-center gap-3 text-white/50 text-sm">
                 <HiPhone className="w-4 h-4 text-church-gold shrink-0" />
-                <a href="tel:+2348000000000" className="hover:text-church-gold transition-colors">
-                  +234 800 000 0000
+                <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} className="hover:text-church-gold transition-colors">
+                  {contactInfo.phone}
                 </a>
               </li>
               <li className="flex items-center gap-3 text-white/50 text-sm">
                 <HiMail className="w-4 h-4 text-church-gold shrink-0" />
-                <a href="mailto:info@lifebuildercitychurch.org" className="hover:text-church-gold transition-colors">
-                  info@lifebuildercitychurch.org
+                <a href={`mailto:${contactInfo.email}`} className="hover:text-church-gold transition-colors">
+                  {contactInfo.email}
                 </a>
               </li>
             </ul>
@@ -95,9 +138,18 @@ const Footer = () => {
               <h4 className="font-accent text-church-gold text-xs tracking-widest uppercase mb-3">Service Times</h4>
               <div className="space-y-2">
                 {serviceTimes.map((service, index) => (
-                  <div key={index} className="flex items-center gap-2 text-white/50 text-sm">
-                    <HiCalendar className="w-3 h-3 text-church-gold" />
-                    <span>{service.day}: {service.time}</span>
+                  <div key={index} className="glass-card-gold px-4 py-3 border border-church-gold/20">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-white/80 text-sm">
+                      <span className="font-semibold text-church-gold">{service.day}</span>
+                      <span className="text-church-gold">|</span>
+                      <span>Starts: {service.start}</span>
+                      {service.close && (
+                        <>
+                          <span className="text-church-gold">|</span>
+                          <span>Close: {service.close}</span>
+                        </>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>

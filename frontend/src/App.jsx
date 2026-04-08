@@ -5,6 +5,7 @@ import SermonsPreviewSection from './components/sections/SermonsPreviewSection'
 import TestimoniesSection from './components/sections/TestimoniesSection'
 import MinistriesSection from './components/sections/MinistriesSection'
 import HeroSection from './components/sections/HeroSection'
+import Footer from './components/layout/Footer'
 
 const DEFAULT = {
   starCount: 220,
@@ -564,6 +565,7 @@ function App() {
           <Route path="*" element={<div className="container mx-auto px-4 py-8"><h2 className="text-2xl font-semibold mb-4">Page not found</h2></div>} />
         </Routes>
       </div>
+      <Footer />
     </div>
   )
 }
