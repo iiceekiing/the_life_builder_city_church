@@ -36,7 +36,7 @@ const Navbar = () => {
     'Connect': [
       { name: 'Book Appointment', to: '/appointments' },
       { name: 'Give', to: '/give' },
-      { name: 'Partner', to: '/partner' },
+      { name: 'About', to: '/about' },
     ],
   }
 
@@ -52,12 +52,13 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-church-gold to-church-gold-light flex items-center justify-center">
-                <span className="text-church-dark font-bold text-lg">LBC</span>
+              <div className="w-32 h-32 rounded-full overflow-hidden flex items-center justify-center border-2 border-red-500">
+                <img 
+                  src="/images/life-builder-city-church-logo.png" 
+                  alt="Life Builder City Church Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <span className="font-display text-white text-xl font-bold hidden sm:block">
-                Life Builder City Church
-              </span>
             </Link>
 
             {/* Desktop Menu */}
@@ -158,6 +159,17 @@ const Navbar = () => {
             className="lg:hidden fixed top-16 left-0 right-0 z-40 glass-card-gold m-4"
           >
             <div className="px-4 py-6 space-y-4">
+              {/* Mobile Logo */}
+              <div className="flex justify-center mb-6">
+                <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/images/life-builder-city-church-logo.png" 
+                    alt="Life Builder City Church Logo"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+
               {navLinks.map((link) => (
                 <Link
                   key={link.name}

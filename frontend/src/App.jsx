@@ -203,14 +203,25 @@ const ChurchBackground = ({ style, className }) => {
 const SimpleNavbar = () => {
   return (
     <nav className="bg-church-purple/90 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-bold text-white">Life Builder City Church</h1>
+          <div className="flex items-center space-x-3">
+            <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
+              <a href="/">
+                <img 
+                  src="/images/life-builder-city-church-logo.png" 
+                  alt="Life Builder City Church Logo"
+                  className="w-full h-full object-contain"
+                />
+              </a>
+            </div>
+
+          </div>
           <div className="flex gap-6">
             <a href="/" className="text-white hover:text-church-gold transition">Home</a>
             <a href="/sermons" className="text-white hover:text-church-gold transition">Sermons</a>
             <a href="/give" className="text-white hover:text-church-gold transition">Give</a>
-            <a href="/partner" className="text-white hover:text-church-gold transition">Partner</a>
+            <a href="/partner" className="text-white hover:text-church-gold transition">About</a>
             <a href="/events" className="text-white hover:text-church-gold transition">Events</a>
             <a href="/gallery" className="text-white hover:text-church-gold transition">Gallery</a>
             <a href="/courses" className="text-white hover:text-church-gold transition">Courses</a>
@@ -251,7 +262,7 @@ const QuotesCarousel = () => {
         setCurrentQuote((prev) => (prev + 1) % quotes.length)
         setIsAnimating(false)
       }, 500)
-    }, 6000) // Changed from 4000ms to 6000ms (slower)
+    }, 6000) 
 
     return () => clearInterval(interval)
   }, [quotes.length])
@@ -355,7 +366,7 @@ const HomeImageFlow = () => {
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 30,
+                duration: 160,
                 ease: "linear",
                 from: 0,
                 to: -(firstRowImages.length * 272 / 2)

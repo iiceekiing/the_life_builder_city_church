@@ -109,23 +109,16 @@ const HeroSection = ({ quotes, imageOpacity = 0.28 }) => {
 
       {/* Layer 4 - Hero text content */}
       <div style={{ position: 'relative', zIndex: 3 }} className="text-center px-4 max-w-5xl mx-auto flex flex-col items-center justify-center min-h-screen">
-        {/* Badge */}
+        {/* Badge - Above Church Name */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-8"
+          className="inline-flex items-center gap-2 glass-card px-4 py-2 mt-16"
         >
           <span className="w-2 h-2 rounded-full bg-church-gold animate-pulse" />
           <span className="font-accent text-church-gold text-xs tracking-[0.3em] uppercase">Welcome Home</span>
         </motion.div>
-
-        {/* Welcome Home Button - Above Church Name */}
-        <div className="flex justify-center mb-4">
-          <Link to="/" className="text-church-gold hover:text-church-gold/80 transition-colors duration-300">
-            Welcome Home
-          </Link>
-        </div>
 
         {/* Church Name */}
         <motion.h1
@@ -181,7 +174,7 @@ const HeroSection = ({ quotes, imageOpacity = 0.28 }) => {
         </div>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-16">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
           <a 
             href="https://www.youtube.com/@glory-life-church" 
             target="_blank" 

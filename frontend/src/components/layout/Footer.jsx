@@ -35,8 +35,12 @@ const Footer = () => {
           {/* Church Info */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-church-gold to-church-gold-light flex items-center justify-center">
-                <span className="text-church-dark font-bold text-xl">LBC</span>
+              <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
+                <img 
+                  src="/images/life-builder-city-church-logo.png" 
+                  alt="Life Builder City Church Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div>
                 <h3 className="font-display text-xl font-bold text-white">Life Builder City Church</h3>
@@ -48,14 +52,18 @@ const Footer = () => {
               A vibrant community of believers committed to building lives and transforming destinies through the power of the Gospel.
             </p>
 
-            {/* Mini Map */}
-            <div className="mb-6 rounded-lg overflow-hidden bg-church-purple/30 h-32 flex items-center justify-center border border-church-gold/20 relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-church-purple/50 to-church-dark/30"></div>
-              <div className="relative text-center p-2 z-10">
-                <HiLocationMarker className="text-3xl text-church-gold mx-auto mb-2 drop-shadow-lg" />
-                <p className="text-white/80 text-xs font-medium">Korinjoh House, Yakubu Gowon Way</p>
-                <p className="text-church-gold text-xs font-bold">Jos, Nigeria</p>
-              </div>
+            {/* Google Map */}
+            <div className="mb-6 rounded-lg overflow-hidden border border-church-gold/20 relative">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.435321267587!2d8.8861906528473!3d9.89765396947551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x105373a2c554df27%3A0x99982a09d2774759!2sKorinjoh%20House!5e0!3m2!1sen!2sng!4v1775618392959!5m2!1sen!2sng" 
+                width="100%" 
+                height="450" 
+                style={{ border: 0 }} 
+                allowFullScreen="" 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full"
+              />
             </div>
 
             {/* Slogan */}
@@ -66,7 +74,7 @@ const Footer = () => {
             </div>
 
             {/* Social Links */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 mt-4">
               <a
                 href={contactInfo.facebook}
                 target="_blank"
@@ -161,7 +169,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-white/5">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/30 text-sm">
-              © {new Date().getFullYear()} Life Builder City Church. All rights reserved.
+              &copy; {new Date().getFullYear()} Life Builder City Church. All rights reserved.
             </p>
             <div className="flex items-center space-x-6 text-white/30 text-sm">
               <Link to="/privacy" className="hover:text-church-gold transition-colors">Privacy Policy</Link>
