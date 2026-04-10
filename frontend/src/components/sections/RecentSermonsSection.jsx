@@ -186,10 +186,76 @@ const RecentSermonsSection = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-12"
+          className="text-center mt-32"
+          style={{ marginTop: '8rem' }} // Force larger margin
         >
-          <Link to="/sermons" className="btn-outline-gold">
-            View All Sermons
+          <Link 
+            to="/sermons" 
+            className="inline-block px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 relative overflow-hidden group"
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(3, 11, 31, 1) 0%, rgba(3, 11, 31, 0.96) 65%, rgba(201, 149, 42, 0.45) 100%) !important',
+              backdropFilter: 'blur(6px) brightness(0.95) saturate(0.85) !important',
+              border: '2px solid rgba(201, 149, 42, 0.8) !important',
+              boxShadow: '0 6px 20px rgba(3, 11, 31, 0.5), inset 0 2px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(201, 149, 42, 0.6), 0 0 15px rgba(201, 149, 42, 0.15) !important',
+              color: '#ffffff !important',
+              position: 'relative !important',
+              textShadow: '0 2px 3px rgba(0, 0, 0, 0.5) !important',
+              textDecoration: 'none !important',
+              padding: '1rem 2rem !important',
+              borderRadius: '9999px !important',
+              fontSize: '1.125rem !important',
+              fontWeight: '700 !important',
+              display: 'inline-block !important',
+              overflow: 'hidden !important'
+            }}
+          >
+            {/* Deep glow effect */}
+            <div className="absolute inset-0 rounded-full opacity-30" style={{
+              background: 'radial-gradient(circle at 25% 25%, rgba(201, 149, 42, 0.6) 0%, transparent 65%)',
+              position: 'absolute !important',
+              inset: '0 !important',
+              borderRadius: '9999px !important',
+              opacity: '0.3 !important'
+            }}></div>
+            
+            {/* Dark perfect stars */}
+            <span className="absolute top-1 left-2 text-xs opacity-100" style={{ 
+              color: '#c9952a !important', 
+              textShadow: '0 0 6px rgba(201, 149, 42, 0.8) !important',
+              position: 'absolute !important',
+              top: '4px !important',
+              left: '8px !important',
+              fontSize: '0.75rem !important',
+              opacity: '1 !important'
+            }}>✦</span>
+            <span className="absolute top-3 right-3 text-xs opacity-85" style={{ 
+              color: '#c9952a !important', 
+              textShadow: '0 0 5px rgba(201, 149, 42, 0.6) !important',
+              position: 'absolute !important',
+              top: '12px !important',
+              right: '12px !important',
+              fontSize: '0.75rem !important',
+              opacity: '0.85 !important'
+            }}>✧</span>
+            <span className="absolute bottom-2 left-4 text-xs opacity-90" style={{ 
+              color: '#c9952a !important', 
+              textShadow: '0 0 5px rgba(201, 149, 42, 0.7) !important',
+              position: 'absolute !important',
+              bottom: '8px !important',
+              left: '16px !important',
+              fontSize: '0.75rem !important',
+              opacity: '0.9 !important'
+            }}>✦</span>
+            
+            {/* Button Text */}
+            <span className="relative z-10 font-bold tracking-wide" style={{
+              position: 'relative !important',
+              zIndex: '10 !important',
+              fontWeight: '700 !important',
+              letterSpacing: '0.025em !important'
+            }}>
+              View All Sermons
+            </span>
           </Link>
         </motion.div>
       </div>

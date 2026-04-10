@@ -216,15 +216,106 @@ const TestimoniesSection = () => {
         <div className="text-center mt-12">
           <button
             onClick={handleShareTestimony}
-            className="bg-church-gold text-church-dark px-8 py-3 rounded-lg font-medium hover:bg-church-gold/90 transition-colors mr-4"
+            style={{
+              backgroundColor: '#030b1f',
+              border: '2px solid #c9952a',
+              color: '#ffffff',
+              padding: '16px 32px',
+              borderRadius: '50px',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 4px 15px rgba(3, 11, 31, 0.3)',
+              marginRight: '16px'
+            }}
           >
-            Share Your Testimony
+            {/* Gold stars */}
+            <span style={{
+              position: 'absolute',
+              top: '8px',
+              left: '12px',
+              color: '#c9952a',
+              fontSize: '12px',
+              zIndex: '2'
+            }}>✦</span>
+            <span style={{
+              position: 'absolute',
+              top: '20px',
+              right: '16px',
+              color: '#c9952a',
+              fontSize: '12px',
+              zIndex: '2'
+            }}>✧</span>
+            <span style={{
+              position: 'absolute',
+              bottom: '12px',
+              left: '20px',
+              color: '#c9952a',
+              fontSize: '12px',
+              zIndex: '2'
+            }}>✦</span>
+            
+            {/* Button text */}
+            <span style={{
+              position: 'relative',
+              zIndex: '3',
+              fontWeight: 'bold'
+            }}>
+              Share Your Testimony
+            </span>
           </button>
           <button
             onClick={handleReadAll}
-            className="border border-church-gold text-church-gold px-8 py-3 rounded-lg font-medium hover:bg-church-gold hover:text-church-dark transition-colors"
+            style={{
+              backgroundColor: '#030b1f',
+              border: '2px solid #c9952a',
+              color: '#ffffff',
+              padding: '16px 32px',
+              borderRadius: '50px',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 4px 15px rgba(3, 11, 31, 0.3)'
+            }}
           >
-            Read All Testimonies
+            {/* Gold stars */}
+            <span style={{
+              position: 'absolute',
+              top: '8px',
+              left: '12px',
+              color: '#c9952a',
+              fontSize: '12px',
+              zIndex: '2'
+            }}>✦</span>
+            <span style={{
+              position: 'absolute',
+              top: '20px',
+              right: '16px',
+              color: '#c9952a',
+              fontSize: '12px',
+              zIndex: '2'
+            }}>✧</span>
+            <span style={{
+              position: 'absolute',
+              bottom: '12px',
+              left: '20px',
+              color: '#c9952a',
+              fontSize: '12px',
+              zIndex: '2'
+            }}>✦</span>
+            
+            {/* Button text */}
+            <span style={{
+              position: 'relative',
+              zIndex: '3',
+              fontWeight: 'bold'
+            }}>
+              Read All Testimonies
+            </span>
           </button>
         </div>
       </div>

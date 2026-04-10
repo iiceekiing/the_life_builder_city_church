@@ -153,14 +153,13 @@ const SermonCard = ({
     if (sermon.audio_url) {
       const audio = audioRef.current
       
-      // Debug: Check if audio element exists
       console.log('Audio element:', audio)
       console.log('Audio URL:', sermon.audio_url)
       console.log('Current isPlaying state:', isPlaying)
       console.log('Currently playing sermon ID:', currentlyPlayingId)
       
-      if (isPlaying) {
-        // Pause the audio
+      if (isPlaying && currentlyPlayingId === sermon.id) {
+        // Pause the audio if this sermon is currently playing
         audio.pause()
         setIsPlaying(false)
         setPlayIconFilled(false)
@@ -176,6 +175,11 @@ const SermonCard = ({
         
         // Show player first
         setShowPlayer(true)
+        
+        // Set this card as active
+        if (!isActiveCard) {
+          onClick(sermon.id)
+        }
         
         // Try to play after a short delay to ensure player is visible
         setTimeout(() => {
@@ -200,11 +204,11 @@ const SermonCard = ({
               }, 1000)
             })
           }
-        }, 500)
+        }, 100)
       }
     } else {
-      // Show message if no audio available
-      alert('Audio coming soon for this sermon')
+      console.error('No audio URL available for sermon:', sermon.title)
+      alert(`No audio available for: ${sermon.title}`)
     }
   }
   
@@ -259,7 +263,13 @@ const SermonCard = ({
         </div>
         
         {/* Play Button Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div 
+          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation()
+            handlePlay()
+          }}
+        >
           {isActiveCard ? (
             <motion.div
               className="w-12 h-12 bg-church-gold rounded-full flex items-center justify-center"
@@ -271,7 +281,7 @@ const SermonCard = ({
               </svg>
             </motion.div>
           ) : (
-            <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
+            <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors">
               <svg className="w-6 h-6 text-church-dark" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
               </svg>
@@ -639,12 +649,57 @@ const SermonsPreviewSection = () => {
         )}
         
         {/* View All CTA */}
-        <div className="text-center">
+        <div className="text-center" style={{ marginTop: '3rem' }}>
           <button
             onClick={handleViewAll}
-            className="bg-church-gold text-church-dark px-8 py-3 rounded-lg font-medium hover:bg-church-gold/90 transition-colors"
+            style={{
+              backgroundColor: '#030b1f',
+              border: '2px solid #c9952a',
+              color: '#ffffff',
+              padding: '16px 32px',
+              borderRadius: '50px',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 4px 15px rgba(3, 11, 31, 0.3)'
+            }}
           >
-            View All Sermons
+            {/* Simple gold stars */}
+            <span style={{
+              position: 'absolute',
+              top: '8px',
+              left: '12px',
+              color: '#c9952a',
+              fontSize: '12px',
+              zIndex: '2'
+            }}>✦</span>
+            <span style={{
+              position: 'absolute',
+              top: '20px',
+              right: '16px',
+              color: '#c9952a',
+              fontSize: '12px',
+              zIndex: '2'
+            }}>✧</span>
+            <span style={{
+              position: 'absolute',
+              bottom: '12px',
+              left: '20px',
+              color: '#c9952a',
+              fontSize: '12px',
+              zIndex: '2'
+            }}>✦</span>
+            
+            {/* Button text */}
+            <span style={{
+              position: 'relative',
+              zIndex: '3',
+              fontWeight: 'bold'
+            }}>
+              View All Sermons
+            </span>
           </button>
         </div>
       </div>

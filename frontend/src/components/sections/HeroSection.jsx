@@ -127,9 +127,10 @@ const HeroSection = ({ quotes, imageOpacity = 0.28 }) => {
           transition={{ delay: 0.5 }}
           className="font-display text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-none"
         >
-          Life <span className="gradient-text">Builder</span>
+          <span className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white/90">Life</span>
+          <span className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white/90"> Builder</span>
           <br />
-          <span className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white/90">City Church</span>
+          <span className="gradient-text">City</span> <span className="text-5xl md:text-7xl lg:text-8xl font-semibold text-white"> Church</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -179,12 +180,59 @@ const HeroSection = ({ quotes, imageOpacity = 0.28 }) => {
             href="https://www.youtube.com/@glory-life-church" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="btn-gold text-base px-8 py-4"
+            className="inline-block px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 relative overflow-hidden group"
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(3, 11, 31, 1) 0%, rgba(3, 11, 31, 0.96) 65%, rgba(201, 149, 42, 0.45) 100%)',
+              backdropFilter: 'blur(6px) brightness(0.95) saturate(0.85)',
+              border: '2px solid rgba(201, 149, 42, 0.8)',
+              boxShadow: '0 6px 20px rgba(3, 11, 31, 0.5), inset 0 2px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(201, 149, 42, 0.6), 0 0 15px rgba(201, 149, 42, 0.15)',
+              color: '#ffffff',
+              position: 'relative',
+              textShadow: '0 2px 3px rgba(0, 0, 0, 0.5)',
+              textDecoration: 'none'
+            }}
           >
-            Watch Sermons
+            {/* Deep glow effect */}
+            <div className="absolute inset-0 rounded-full opacity-30" style={{
+              background: 'radial-gradient(circle at 25% 25%, rgba(201, 149, 42, 0.6) 0%, transparent 65%)',
+            }}></div>
+            
+            {/* Dark perfect stars */}
+            <span className="absolute top-1 left-2 text-xs opacity-100" style={{ color: '#c9952a', textShadow: '0 0 6px rgba(201, 149, 42, 0.8)' }}>✦</span>
+            <span className="absolute top-3 right-3 text-xs opacity-85" style={{ color: '#c9952a', textShadow: '0 0 5px rgba(201, 149, 42, 0.6)' }}>✧</span>
+            <span className="absolute bottom-2 left-4 text-xs opacity-90" style={{ color: '#c9952a', textShadow: '0 0 5px rgba(201, 149, 42, 0.7)' }}>✦</span>
+            
+            {/* Button Text */}
+            <span className="relative z-10 font-bold tracking-wide">
+              Watch Sermons
+            </span>
           </a>
-          <Link to="/partnership" className="btn-outline-gold text-base px-8 py-4">
-            Partner With Us
+          <Link to="/partnership" className="inline-block px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 relative overflow-hidden group"
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(3, 11, 31, 1) 0%, rgba(3, 11, 31, 0.96) 65%, rgba(201, 149, 42, 0.45) 100%)',
+              backdropFilter: 'blur(6px) brightness(0.95) saturate(0.85)',
+              border: '2px solid rgba(201, 149, 42, 0.8)',
+              boxShadow: '0 6px 20px rgba(3, 11, 31, 0.5), inset 0 2px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(201, 149, 42, 0.6), 0 0 15px rgba(201, 149, 42, 0.15)',
+              color: '#ffffff',
+              position: 'relative',
+              textShadow: '0 2px 3px rgba(0, 0, 0, 0.5)',
+              textDecoration: 'none'
+            }}
+          >
+            {/* Deep glow effect */}
+            <div className="absolute inset-0 rounded-full opacity-30" style={{
+              background: 'radial-gradient(circle at 25% 25%, rgba(201, 149, 42, 0.6) 0%, transparent 65%)',
+            }}></div>
+            
+            {/* Dark perfect stars */}
+            <span className="absolute top-1 left-2 text-xs opacity-100" style={{ color: '#c9952a', textShadow: '0 0 6px rgba(201, 149, 42, 0.8)' }}>✦</span>
+            <span className="absolute top-3 right-3 text-xs opacity-85" style={{ color: '#c9952a', textShadow: '0 0 5px rgba(201, 149, 42, 0.6)' }}>✧</span>
+            <span className="absolute bottom-2 left-4 text-xs opacity-90" style={{ color: '#c9952a', textShadow: '0 0 5px rgba(201, 149, 42, 0.7)' }}>✦</span>
+            
+            {/* Button Text */}
+            <span className="relative z-10 font-bold tracking-wide">
+              Partner With Us
+            </span>
           </Link>
         </div>
 

@@ -5,6 +5,7 @@ import SermonsPreviewSection from './components/sections/SermonsPreviewSection'
 import TestimoniesSection from './components/sections/TestimoniesSection'
 import MinistriesSection from './components/sections/MinistriesSection'
 import HeroSection from './components/sections/HeroSection'
+import GalleryMarquee from './components/sections/GalleryMarquee'
 import Footer from './components/layout/Footer'
 
 const DEFAULT = {
@@ -280,122 +281,6 @@ const QuotesCarousel = () => {
   )
 }
 
-const HomeImageFlow = () => {
-  // First row images - right to left
-  const [firstRowImages] = useState([
-    { id: 1, src: '/images/gallery1.png', alt: 'Church Service' },
-    { id: 3, src: '/images/gallery3.png', alt: 'Community Event' },
-    { id: 4, src: '/images/gallery4.png', alt: 'Baptism Ceremony' },
-    { id: 5, src: '/images/gallery5.png', alt: 'Youth Ministry' },
-    { id: 6, src: '/images/gallery6.png', alt: 'Prayer Meeting' },
-    { id: 7, src: '/images/gallery7.png', alt: 'Church Building' },
-    { id: 8, src: '/images/gallery8.png', alt: 'Choir Performance' },
-    { id: 9, src: '/images/gallery9.png', alt: 'Bible Study' },
-    { id: 10, src: '/images/gallery10.png', alt: 'Outreach Program' },
-    { id: 11, src: '/images/gallery11.png', alt: 'Fellowship Gathering' },
-    { id: 12, src: '/images/gallery12.png', alt: 'Sunday School' },
-    { id: 13, src: '/images/gallery13.png', alt: 'Mission Trip' },
-    { id: 14, src: '/images/gallery14.png', alt: 'Church Conference' },
-    { id: 15, src: '/images/gallery15.png', alt: 'Praise & Worship' },
-    { id: 16, src: '/images/gallery16.png', alt: 'Church Leadership' },
-    { id: 17, src: '/images/gallery17.jpeg', alt: 'Church Service 2' },
-    { id: 18, src: '/images/gallery18.jpeg', alt: 'Worship Session 2' },
-    { id: 19, src: '/images/gallery19.jpeg', alt: 'Community Event 2' },
-    { id: 20, src: '/images/gallery20.jpeg', alt: 'Baptism Ceremony 2' },
-    { id: 21, src: '/images/gallery21.jpeg', alt: 'Church Service 3' },
-    { id: 22, src: '/images/gallery22.jpeg', alt: 'Worship Session 3' },
-    { id: 23, src: '/images/gallery23.jpeg', alt: 'Community Event 3' },
-    { id: 24, src: '/images/gallery24.jpeg', alt: 'Baptism Ceremony 3' },
-    { id: 25, src: '/images/gallery25.jpeg', alt: 'Youth Ministry 2' },
-    { id: 26, src: '/images/gallery26.jpeg', alt: 'Prayer Meeting 2' },
-    { id: 27, src: '/images/gallery27.jpeg', alt: 'Church Building 2' },
-    { id: 28, src: '/images/gallery28.jpeg', alt: 'Choir Performance 2' },
-    { id: 29, src: '/images/gallery29.jpeg', alt: 'Bible Study 2' },
-    { id: 30, src: '/images/gallery30.jpeg', alt: 'Outreach Program 2' },
-    { id: 31, src: '/images/gallery31.jpeg', alt: 'Fellowship Gathering 2' },
-    { id: 1, src: '/images/gallery1.png', alt: 'Church Service' },
-    { id: 3, src: '/images/gallery3.png', alt: 'Community Event' },
-    { id: 4, src: '/images/gallery4.png', alt: 'Baptism Ceremony' },
-    { id: 5, src: '/images/gallery5.png', alt: 'Youth Ministry' },
-    { id: 6, src: '/images/gallery6.png', alt: 'Prayer Meeting' },
-    { id: 7, src: '/images/gallery7.png', alt: 'Church Building' },
-    { id: 8, src: '/images/gallery8.png', alt: 'Choir Performance' },
-    { id: 9, src: '/images/gallery9.png', alt: 'Bible Study' },
-    { id: 10, src: '/images/gallery10.png', alt: 'Outreach Program' },
-    { id: 11, src: '/images/gallery11.png', alt: 'Fellowship Gathering' },
-    { id: 12, src: '/images/gallery12.png', alt: 'Sunday School' },
-    { id: 13, src: '/images/gallery13.png', alt: 'Mission Trip' },
-    { id: 14, src: '/images/gallery14.png', alt: 'Church Conference' },
-    { id: 15, src: '/images/gallery15.png', alt: 'Praise & Worship' },
-    { id: 16, src: '/images/gallery16.png', alt: 'Church Leadership' },
-    { id: 17, src: '/images/gallery17.jpeg', alt: 'Church Service 2' },
-    { id: 18, src: '/images/gallery18.jpeg', alt: 'Worship Session 2' },
-    { id: 19, src: '/images/gallery19.jpeg', alt: 'Community Event 2' },
-    { id: 20, src: '/images/gallery20.jpeg', alt: 'Baptism Ceremony 2' },
-    { id: 21, src: '/images/gallery21.jpeg', alt: 'Church Service 3' },
-    { id: 22, src: '/images/gallery22.jpeg', alt: 'Worship Session 3' },
-    { id: 23, src: '/images/gallery23.jpeg', alt: 'Community Event 3' },
-    { id: 24, src: '/images/gallery24.jpeg', alt: 'Baptism Ceremony 3' },
-    { id: 25, src: '/images/gallery25.jpeg', alt: 'Youth Ministry 2' },
-    { id: 26, src: '/images/gallery26.jpeg', alt: 'Prayer Meeting 2' },
-    { id: 27, src: '/images/gallery27.jpeg', alt: 'Church Building 2' },
-    { id: 28, src: '/images/gallery28.jpeg', alt: 'Choir Performance 2' },
-    { id: 29, src: '/images/gallery29.jpeg', alt: 'Bible Study 2' },
-    { id: 30, src: '/images/gallery30.jpeg', alt: 'Outreach Program 2' }
-  ])
-
-  return (
-    <section className="bg-white py-12">
-      <div className="container mx-auto px-4">
-        {/* Section Heading */}
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-accent text-church-gold mb-2">
-            Captured in Glory
-          </h2>
-          <p className="text-lg font-serif text-gray-800">
-            Experience Life at Life Builder City Church
-          </p>
-        </div>
-
-        {/* First Row - Right to Left - start from center */}
-        <div className="overflow-hidden mb-6">
-          <motion.div
-            className="flex gap-4"
-            animate={{ x: -(firstRowImages.length * 272 / 2) }}
-            transition={{ 
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 160,
-                ease: "linear",
-                from: 0,
-                to: -(firstRowImages.length * 272 / 2)
-              }
-            }}
-          >
-            {/* Original + Duplicate for seamless loop */}
-            {[...firstRowImages, ...firstRowImages].map((image, index) => (
-              <motion.div
-                key={`row1-${image.id}-${index}`}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-                className="flex-shrink-0 w-64 h-48 rounded-xl overflow-hidden shadow-lg cursor-pointer"
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-      </div>
-    </section>
-  )
-}
 
 const GallerySection = () => {
   // Use renamed images with simple names
@@ -537,7 +422,7 @@ function App() {
               "Your destiny is our priority",
               "Building lives, building destiny"
             ]} />
-            <HomeImageFlow />
+            <GalleryMarquee />
             <SermonsPreviewSection />
             <TestimoniesSection />
             <MinistriesSection />
