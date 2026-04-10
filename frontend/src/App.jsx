@@ -9,6 +9,7 @@ import GalleryMarquee from './components/sections/GalleryMarquee'
 import Footer from './components/layout/Footer'
 import GalleryPage from './pages/GalleryPage'
 import GivePage from './pages/GivePage'
+import AboutPage from './pages/AboutPage'
 
 const DEFAULT = {
   starCount: 220,
@@ -224,7 +225,7 @@ const SimpleNavbar = () => {
             <a href="/" className="text-white hover:text-church-gold transition">Home</a>
             <a href="/sermons" className="text-white hover:text-church-gold transition">Sermons</a>
             <a href="/give" className="text-white hover:text-church-gold transition">Give</a>
-            <a href="/partner" className="text-white hover:text-church-gold transition">About</a>
+            <a href="/about" className="text-white hover:text-church-gold transition">About</a>
             <a href="/events" className="text-white hover:text-church-gold transition">Events</a>
             <a href="/gallery" className="text-white hover:text-church-gold transition">Gallery</a>
             <a href="/courses" className="text-white hover:text-church-gold transition">Courses</a>
@@ -365,6 +366,7 @@ function App() {
             </div>
           } />
           <Route path="/give" element={<GivePage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/partner" element={
             <div className="container mx-auto px-4 py-8">
               <h2 className="text-2xl font-semibold mb-4">Partner Page</h2>
