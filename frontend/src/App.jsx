@@ -8,6 +8,7 @@ import HeroSection from './components/sections/HeroSection'
 import GalleryMarquee from './components/sections/GalleryMarquee'
 import Footer from './components/layout/Footer'
 import GalleryPage from './pages/GalleryPage'
+import GivePage from './pages/GivePage'
 
 const DEFAULT = {
   starCount: 220,
@@ -363,12 +364,7 @@ function App() {
               <p className="text-gray-300">Sermons coming soon...</p>
             </div>
           } />
-          <Route path="/give" element={
-            <div className="container mx-auto px-4 py-8">
-              <h2 className="text-2xl font-semibold mb-4">Give Page</h2>
-              <p className="text-gray-300">Give coming soon...</p>
-            </div>
-          } />
+          <Route path="/give" element={<GivePage />} />
           <Route path="/partner" element={
             <div className="container mx-auto px-4 py-8">
               <h2 className="text-2xl font-semibold mb-4">Partner Page</h2>
