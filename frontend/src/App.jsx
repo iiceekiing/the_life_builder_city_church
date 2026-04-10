@@ -10,6 +10,7 @@ import Footer from './components/layout/Footer'
 import GalleryPage from './pages/GalleryPage'
 import GivePage from './pages/GivePage'
 import AboutPage from './pages/AboutPage'
+import SermonsPage from './pages/SermonsPage'
 
 const DEFAULT = {
   starCount: 220,
@@ -359,12 +360,7 @@ function App() {
             <TestimoniesSection />
             <MinistriesSection />
           </>} />
-          <Route path="/sermons" element={
-            <div className="container mx-auto px-4 py-8">
-              <h2 className="text-2xl font-semibold mb-4">Sermons Page</h2>
-              <p className="text-gray-300">Sermons coming soon...</p>
-            </div>
-          } />
+          <Route path="/sermons" element={<SermonsPage />} />
           <Route path="/give" element={<GivePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/partner" element={
