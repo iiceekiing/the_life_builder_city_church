@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const GallerySection = () => {
+const GalleryPage = () => {
   const [selectedImage, setSelectedImage] = useState(null)
   const [filter, setFilter] = useState('all')
 
@@ -112,7 +112,7 @@ const GallerySection = () => {
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16">
+    <section className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-4">
         
         {/* Header */}
@@ -120,10 +120,10 @@ const GallerySection = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 bg-gradient-to-r">Gallery</span>
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Gallery</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Explore the beautiful moments and vibrant community life at Life Builder City Church
@@ -235,4 +235,4 @@ const GallerySection = () => {
   )
 }
 
-export default GallerySection
+export default GalleryPage

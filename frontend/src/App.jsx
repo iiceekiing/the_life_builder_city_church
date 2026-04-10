@@ -7,6 +7,7 @@ import MinistriesSection from './components/sections/MinistriesSection'
 import HeroSection from './components/sections/HeroSection'
 import GalleryMarquee from './components/sections/GalleryMarquee'
 import Footer from './components/layout/Footer'
+import GalleryPage from './pages/GalleryPage'
 
 const DEFAULT = {
   starCount: 220,
@@ -282,77 +283,6 @@ const QuotesCarousel = () => {
 }
 
 
-const GallerySection = () => {
-  // Use renamed images with simple names
-  const [galleryImages] = useState([
-    { id: 1, src: '/images/gallery1.png', alt: 'Church Service' },
-    { id: 2, src: '/images/gallery2.png', alt: 'Worship Session' },
-    { id: 3, src: '/images/gallery3.png', alt: 'Community Event' },
-    { id: 4, src: '/images/gallery4.png', alt: 'Baptism Ceremony' },
-    { id: 5, src: '/images/gallery5.png', alt: 'Youth Ministry' },
-    { id: 6, src: '/images/gallery6.png', alt: 'Prayer Meeting' },
-    { id: 7, src: '/images/gallery7.png', alt: 'Church Building' },
-    { id: 8, src: '/images/gallery8.png', alt: 'Choir Performance' },
-    { id: 9, src: '/images/gallery9.png', alt: 'Bible Study' },
-    { id: 10, src: '/images/gallery10.png', alt: 'Outreach Program' },
-    { id: 11, src: '/images/gallery11.png', alt: 'Fellowship Gathering' },
-    { id: 12, src: '/images/gallery12.png', alt: 'Sunday School' },
-    { id: 13, src: '/images/gallery13.png', alt: 'Mission Trip' },
-    { id: 14, src: '/images/gallery14.png', alt: 'Church Conference' },
-    { id: 15, src: '/images/gallery15.png', alt: 'Praise & Worship' },
-    { id: 16, src: '/images/gallery16.png', alt: 'Church Leadership' }
-  ])
-
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
-
-  // Active image pulse effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isPaused) {
-        setActiveIndex((prev) => (prev + 1) % galleryImages.length)
-      }
-    }, 2500) // Change every 2.5 seconds
-
-    return () => clearInterval(interval)
-  }, [galleryImages.length, isPaused])
-
-  return (
-    <section className="bg-white py-16">
-      <div className="container mx-auto px-4 max-w-7xl">
-        {/* Section Heading */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-accent text-church-gold mb-2">
-            MEDIA & MOMENTS
-          </h2>
-          <p className="text-lg md:text-xl font-serif text-gray-800">
-            Our Church Gallery
-          </p>
-        </div>
-
-        {/* Simple Image Grid - No animations */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {galleryImages.map((image, index) => (
-            <div
-              key={image.id}
-              className="aspect-square rounded-2xl shadow-md overflow-hidden cursor-pointer group bg-gray-100"
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                loading="lazy"
-                className="w-full h-full object-cover"
-                onError={(e) => console.log('Image load error:', e, 'Source:', image.src)}
-                onLoad={() => console.log('Image loaded successfully:', image.src)}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 const SimpleHero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -451,7 +381,7 @@ function App() {
               <p className="text-gray-300">Events coming soon...</p>
             </div>
           } />
-          <Route path="/gallery" element={<GallerySection />} />
+          <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/courses" element={
             <div className="container mx-auto px-4 py-8">
               <h2 className="text-2xl font-semibold mb-4">Courses Page</h2>
