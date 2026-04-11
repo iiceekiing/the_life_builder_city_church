@@ -1,8 +1,35 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, ForeignKey, Float, JSON
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, ForeignKey, Float, JSON, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+import enum
 
 from app.db.session import Base
+
+
+class CourseType(str, enum.Enum):
+    BIBLICAL_STUDIES = "biblical_studies"
+    LEADERSHIP = "leadership"
+    MINISTRY_TRAINING = "ministry_training"
+    DISCIPLESHIP = "discipleship"
+    THEOLOGY = "theology"
+    PRACTICAL_LIFE = "practical_life"
+    MEDIA_TRAINING = "media_training"
+    MEMBERSHIP_CLASS = "membership_class"
+    WORKERS_CLASS = "workers_class"
+    SCHOOL_OF_MINISTRY = "school_of_ministry"
+    HILA = "hila"
+
+
+class MediaSubcategory(str, enum.Enum):
+    SOUND_TRAINING = "sound_training"
+    LIGHT_TRAINING = "light_training"
+    LIVE_STREAMING = "live_streaming"
+    PHOTOGRAPHY = "photography"
+    VIDEOGRAPHY = "videography"
+    GRAPHICS_DESIGN = "graphics_design"
+    SOCIAL_MEDIA = "social_media"
+    DEVOTIONAL = "devotional"
+    FACILITY_MAINTENANCE = "facility_maintenance"
 
 
 class Course(Base):
@@ -11,19 +38,25 @@ class Course(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(300), nullable=False)
     description = Column(Text, nullable=True)
-    course_type = Column(String(50), nullable=False)  # school_of_ministry, membership_class, workers_training, departmental
+    course_type = Column(Enum(CourseType), nullable=False)
+    media_subcategory = Column(Enum(MediaSubcategory), nullable=True)  # Only for media training
     instructor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     thumbnail_url = Column(String(500), nullable=True)
     is_published = Column(Boolean, default=False)
     is_free = Column(Boolean, default=True)
+    price = Column(Float, nullable=True)  # For paid courses like HILA
     duration_weeks = Column(Integer, nullable=True)
+    total_videos = Column(Integer, default=7)  # Number of videos in course
+    passing_score = Column(Integer, default=50)  # Minimum score for assessments
+    certification_passing_score = Column(Integer, default=80)  # For final exam
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
+    # Relationships
     instructor = relationship("User", foreign_keys=[instructor_id])
     lessons = relationship("Lesson", back_populates="course", cascade="all, delete-orphan")
     enrollments = relationship("Enrollment", back_populates="course")
-    exams = relationship("Exam", back_populates="course", cascade="all, delete-orphan")
+    assessments = relationship("Assessment", back_populates="course", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Course {self.title}>"
@@ -41,80 +74,12 @@ class Lesson(Base):
     order_index = Column(Integer, default=0)
     is_published = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
+    # Relationships
     course = relationship("Course", back_populates="lessons")
+    progress = relationship("Progress", back_populates="lesson")
+    assessment = relationship("Assessment", back_populates="lesson")
 
-
-class Enrollment(Base):
-    __tablename__ = "enrollments"
-
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    course_id = Column(Integer, ForeignKey("courses.id"), nullable=False)
-    enrolled_at = Column(DateTime(timezone=True), server_default=func.now())
-    completed_at = Column(DateTime(timezone=True), nullable=True)
-    progress_percent = Column(Float, default=0.0)
-    status = Column(String(20), default="active")  # active, completed, dropped
-
-    user = relationship("User", back_populates="enrollments")
-    course = relationship("Course", back_populates="enrollments")
-
-
-class Exam(Base):
-    __tablename__ = "exams"
-
-    id = Column(Integer, primary_key=True, index=True)
-    course_id = Column(Integer, ForeignKey("courses.id"), nullable=False)
-    title = Column(String(300), nullable=False)
-    description = Column(Text, nullable=True)
-    passing_score = Column(Float, default=70.0)
-    time_limit_minutes = Column(Integer, nullable=True)
-    is_published = Column(Boolean, default=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-
-    course = relationship("Course", back_populates="exams")
-    questions = relationship("ExamQuestion", back_populates="exam", cascade="all, delete-orphan")
-    results = relationship("ExamResult", back_populates="exam")
-
-
-class ExamQuestion(Base):
-    __tablename__ = "exam_questions"
-
-    id = Column(Integer, primary_key=True, index=True)
-    exam_id = Column(Integer, ForeignKey("exams.id"), nullable=False)
-    question_text = Column(Text, nullable=False)
-    options = Column(JSON, nullable=False)  # ["option1", "option2", "option3", "option4"]
-    correct_answer = Column(Integer, nullable=False)  # index of correct option
-    explanation = Column(Text, nullable=True)
-    order_index = Column(Integer, default=0)
-
-    exam = relationship("Exam", back_populates="questions")
-
-
-class ExamResult(Base):
-    __tablename__ = "exam_results"
-
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    exam_id = Column(Integer, ForeignKey("exams.id"), nullable=False)
-    score = Column(Float, nullable=False)
-    answers = Column(JSON, nullable=True)
-    passed = Column(Boolean, default=False)
-    completed_at = Column(DateTime(timezone=True), server_default=func.now())
-
-    exam = relationship("Exam", back_populates="results")
-
-
-class Certificate(Base):
-    __tablename__ = "certificates"
-
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    course_id = Column(Integer, ForeignKey("courses.id"), nullable=False)
-    certificate_number = Column(String(50), unique=True, nullable=False)
-    pdf_url = Column(String(500), nullable=True)
-    issued_at = Column(DateTime(timezone=True), server_default=func.now())
-    emailed_at = Column(DateTime(timezone=True), nullable=True)
-
-    user = relationship("User", back_populates="certificates")
-    course = relationship("Course")
+    def __repr__(self):
+        return f"<Lesson {self.title}>"

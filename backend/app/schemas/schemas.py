@@ -173,11 +173,15 @@ class CourseBase(BaseModel):
     instructor_id: Optional[int] = None
     thumbnail_url: Optional[str] = None
     is_free: bool = True
+    is_published: bool = False
     duration_weeks: Optional[int] = None
 
 
 class CourseCreate(CourseBase):
-    pass
+    price: Optional[float] = 0.0
+    total_videos: Optional[int] = 0
+    passing_score: Optional[int] = 70
+    certification_passing_score: Optional[int] = 80
 
 
 class CourseUpdate(BaseModel):
@@ -222,10 +226,11 @@ class EnrollmentResponse(BaseModel):
     id: int
     user_id: int
     course_id: int
-    enrolled_at: datetime
-    progress_percent: float
+    enrollment_date: datetime
+    progress_percentage: float
     status: str
     course: Optional[CourseResponse] = None
+    user: Optional[dict] = None
 
     class Config:
         from_attributes = True
