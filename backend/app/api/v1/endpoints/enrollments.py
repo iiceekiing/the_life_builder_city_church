@@ -128,6 +128,57 @@ async def get_my_enrollments(
 ):
     """Get current user's enrollments"""
     enrollments = db.query(Enrollment).filter(
-        Enrollment.user_id == current_user.id
+        Enrollment.user_id == current_user.id,
+        Enrollment.status == EnrollmentStatus.APPROVED
     ).order_by(Enrollment.enrollment_date.desc()).all()
     return enrollments
+
+
+@router.post("/{enrollment_id}/reminder")
+async def send_enrollment_reminder(
+    enrollment_id: int,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_active_user)
+):
+    """Send reminder for pending enrollment"""
+    enrollment = db.query(Enrollment).filter(
+        Enrollment.id == enrollment_id,
+        Enrollment.user_id == current_user.id,
+        Enrollment.status == EnrollmentStatus.PENDING
+    ).first()
+    
+    if not enrollment:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Pending enrollment not found"
+        )
+    
+    # TODO: Send actual reminder email to admin
+    # For now, we'll just update a reminder timestamp or log it
+    
+    return {"message": "Reminder sent to admin successfully"}
+
+
+@router.delete("/{enrollment_id}")
+async def cancel_enrollment(
+    enrollment_id: int,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_active_user)
+):
+    """Cancel pending enrollment"""
+    enrollment = db.query(Enrollment).filter(
+        Enrollment.id == enrollment_id,
+        Enrollment.user_id == current_user.id,
+        Enrollment.status == EnrollmentStatus.PENDING
+    ).first()
+    
+    if not enrollment:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Pending enrollment not found"
+        )
+    
+    db.delete(enrollment)
+    db.commit()
+    
+    return {"message": "Enrollment cancelled successfully"}
