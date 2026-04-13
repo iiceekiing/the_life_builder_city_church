@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { HiLockClosed, HiAcademicCap, HiClock, HiBookOpen, HiCurrencyDollar, HiPlay } from 'react-icons/hi'
+import { HiLockClosed, HiAcademicCap, HiClock, HiBookOpen, HiCurrencyDollar, HiPlay, HiInformationCircle } from 'react-icons/hi'
 import ChurchBackground from '../components/ui/ChurchBackground'
 import { useAuth } from '../context/AuthContext'
 import api from '../utils/api'
+import { getCourseTypeConfig } from '../config/courseTypes'
 
 const CoursesPage = () => {
   const { isAuthenticated, user, isAdmin } = useAuth()
@@ -94,8 +95,8 @@ const CoursesPage = () => {
             <div key={course.id} className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 overflow-hidden hover:bg-white/15 transition-all duration-300 hover:scale-105">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 bg-church-gold/20 text-church-gold rounded-full text-xs font-medium">
-                    {course.course_type?.replace('_', ' ') || 'Course'}
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCourseTypeConfig(course.course_type).color}`}>
+                    {getCourseTypeConfig(course.course_type).label}
                   </span>
                   <span className="flex items-center gap-1 text-white/60">
                     <HiCurrencyDollar className="w-4 h-4" />

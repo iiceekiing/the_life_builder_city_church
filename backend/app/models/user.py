@@ -35,6 +35,7 @@ class User(Base):
     appointments = relationship("Appointment", back_populates="user")
     enrollments = relationship("Enrollment", back_populates="user")
     certificates = relationship("Certificate", back_populates="user")
+    courses_taught = relationship("Course", foreign_keys="Course.instructor_id")
 
     def __repr__(self):
         return f"<User {self.email}>"

@@ -49,6 +49,13 @@ class PastorResponse(BaseModel):
     bio: Optional[str] = None
     image_url: Optional[str] = None
     is_available: bool
+    is_global_lead: bool
+    email: str
+    phone: Optional[str] = None
+    max_appointments_per_day: int
+    max_appointments_per_week: int
+    available_days: Optional[str] = None
+    available_times: Optional[str] = None
 
     class Config:
         from_attributes = True

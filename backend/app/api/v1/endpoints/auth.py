@@ -8,7 +8,7 @@ from app.core.security import get_password_hash, verify_password, create_access_
 router = APIRouter()
 
 
-@router.post("/register", response_model=UserResponse)
+@router.post("/register", response_model=Token)
 async def register(user_data: UserCreate, db: Session = Depends(get_db)):
     # Check if user already exists
     user = db.query(User).filter(User.email == user_data.email).first()
@@ -33,7 +33,16 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_user)
     
-    return db_user
+    # Create tokens for the new user
+    access_token = create_access_token(data={"sub": str(db_user.id)})
+    refresh_token = create_refresh_token(data={"sub": str(db_user.id)})
+    
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_token,
+        "token_type": "bearer",
+        "user": db_user
+    }
 
 
 @router.post("/login", response_model=Token)

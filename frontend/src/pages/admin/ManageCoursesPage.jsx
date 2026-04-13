@@ -4,6 +4,7 @@ import { HiAcademicCap, HiPlus, HiPencilAlt, HiTrash, HiEye, HiClock, HiBookOpen
 import ChurchBackground from '../../components/ui/ChurchBackground'
 import { useAuth } from '../../context/AuthContext'
 import api from '../../utils/api'
+import { getCourseTypeConfig } from '../../config/courseTypes'
 
 const ManageCoursesPage = () => {
   const [courses, setCourses] = useState([])
@@ -217,7 +218,25 @@ const ManageCoursesPage = () => {
                           {course.is_free ? 'Free' : `$${course.price || 0}`}
                         </span>
                       </div>
-
+                      
+                      {/* Course Thumbnail */}
+                      <div className="mb-4 h-48 bg-church-purple/10 rounded-lg overflow-hidden">
+                        {course.thumbnail_url ? (
+                          <img 
+                            src={course.thumbnail_url} 
+                            alt={course.title}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.src = '/images/courses/default-course.jpg'
+                            }}
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-church-purple/20">
+                            <HiAcademicCap className="w-16 h-16 text-church-gold/50" />
+                          </div>
+                        )}
+                      </div>
+                      
                       <h3 className="font-display text-lg font-bold text-white mb-2">
                         {course.title}
                       </h3>
@@ -244,8 +263,8 @@ const ManageCoursesPage = () => {
 
                       {/* Course Type Badge */}
                       <div className="mb-4">
-                        <span className="px-2 py-1 bg-church-gold/20 text-church-gold rounded text-xs font-medium">
-                          {course.course_type || 'N/A'}
+                        <span className={`px-2 py-1 rounded text-xs font-medium ${getCourseTypeConfig(course.course_type).color}`}>
+                          {getCourseTypeConfig(course.course_type).label}
                         </span>
                       </div>
                     </div>

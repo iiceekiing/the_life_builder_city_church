@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { HiUsers, HiAcademicCap, HiClipboardList, HiChartBar, HiUserAdd, HiCog, HiLogout, HiCheckCircle, HiClock, HiXCircle, HiRefresh, HiEye, HiEyeOff } from 'react-icons/hi'
+import { HiUsers, HiAcademicCap, HiClipboardList, HiChartBar, HiUserAdd, HiCog, HiLogout, HiCheckCircle, HiClock, HiXCircle, HiRefresh, HiEye, HiEyeOff, HiCalendar } from 'react-icons/hi'
 import ChurchBackground from '../components/ui/ChurchBackground'
 import { useAuth } from '../context/AuthContext'
 import api from '../utils/api'
+import { getCourseTypeConfig } from '../config/courseTypes'
 
 const AdminDashboardPage = () => {
   const [stats, setStats] = useState({
@@ -11,11 +12,14 @@ const AdminDashboardPage = () => {
     totalCourses: 0,
     totalEnrollments: 0,
     pendingEnrollments: 0,
-    completedCourses: 0
+    completedCourses: 0,
+    totalAppointments: 0,
+    pendingAppointments: 0
   })
   const [enrollments, setEnrollments] = useState([])
   const [courses, setCourses] = useState([])
   const [users, setUsers] = useState([])
+  const [appointments, setAppointments] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState('overview')
@@ -36,19 +40,22 @@ const AdminDashboardPage = () => {
       setError('')
       
       // Fetch all admin data in parallel
-      const [enrollmentsRes, coursesRes, usersRes] = await Promise.all([
+      const [enrollmentsRes, coursesRes, usersRes, appointmentsRes] = await Promise.all([
         api.get('/enrollments/all'),
         api.get('/courses/'),
-        api.get('/users')  // We'll need to create this endpoint
+        api.get('/users'),  // We'll need to create this endpoint
+        api.get('/appointments')
       ])
       
       const enrollmentsData = enrollmentsRes.data || []
       const coursesData = coursesRes.data || []
       const usersData = usersRes.data || []
+      const appointmentsData = appointmentsRes.data || []
       
       setEnrollments(enrollmentsData)
       setCourses(coursesData)
       setUsers(usersData)
+      setAppointments(appointmentsData)
       
       // Calculate stats
       setStats({
@@ -56,7 +63,9 @@ const AdminDashboardPage = () => {
         totalCourses: coursesData.length,
         totalEnrollments: enrollmentsData.length,
         pendingEnrollments: enrollmentsData.filter(e => e.status === 'pending').length,
-        completedCourses: enrollmentsData.filter(e => e.status === 'completed').length
+        completedCourses: enrollmentsData.filter(e => e.status === 'completed').length,
+        totalAppointments: appointmentsData.length,
+        pendingAppointments: appointmentsData.filter(a => a.status === 'pending').length
       })
     } catch (error) {
       console.error('Error fetching admin data:', error)
@@ -148,7 +157,7 @@ const AdminDashboardPage = () => {
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
               <div className="glass-card rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <HiUsers className="w-8 h-8 text-church-gold" />
@@ -178,15 +187,23 @@ const AdminDashboardPage = () => {
                   <HiClock className="w-8 h-8 text-church-gold" />
                   <span className="text-2xl font-bold text-white">{stats.pendingEnrollments}</span>
                 </div>
-                <p className="text-white/60 text-sm">Pending Approvals</p>
+                <p className="text-white/60 text-sm">Pending Enrollments</p>
               </div>
 
               <div className="glass-card rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <HiChartBar className="w-8 h-8 text-church-gold" />
-                  <span className="text-2xl font-bold text-white">{stats.completedCourses}</span>
+                  <HiCalendar className="w-8 h-8 text-church-gold" />
+                  <span className="text-2xl font-bold text-white">{stats.totalAppointments}</span>
                 </div>
-                <p className="text-white/60 text-sm">Completed Courses</p>
+                <p className="text-white/60 text-sm">Total Appointments</p>
+              </div>
+
+              <div className="glass-card rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <HiClock className="w-8 h-8 text-yellow-400" />
+                  <span className="text-2xl font-bold text-white">{stats.pendingAppointments}</span>
+                </div>
+                <p className="text-white/60 text-sm">Pending Appointments</p>
               </div>
             </div>
           </div>
@@ -256,7 +273,7 @@ const AdminDashboardPage = () => {
                               <td className="p-4">
                                 <div>
                                   <p className="text-white font-medium">{enrollment.course?.title || 'Unknown Course'}</p>
-                                  <p className="text-white/40 text-sm">{enrollment.course?.course_type || 'N/A'}</p>
+                                  <p className="text-white/40 text-sm">{getCourseTypeConfig(enrollment.course?.course_type).label || 'N/A'}</p>
                                 </div>
                               </td>
                               <td className="p-4 text-white/60">
@@ -299,8 +316,68 @@ const AdminDashboardPage = () => {
                 )}
               </div>
 
+              {/* Pending Appointments */}
+              {appointments.filter(a => a.status === 'pending').length > 0 && (
+                <div className="glass-card rounded-2xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-bold text-white">Pending Appointments</h3>
+                    <Link
+                      to="/admin/appointments"
+                      className="text-church-gold hover:text-church-gold/80 transition-colors text-sm"
+                    >
+                      View All
+                    </Link>
+                  </div>
+                  <div className="space-y-3">
+                    {appointments
+                      .filter(a => a.status === 'pending')
+                      .slice(0, 3)
+                      .map((appointment) => (
+                        <div key={appointment.id} className="bg-white/5 rounded-lg p-3 border border-white/10">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <h4 className="text-white font-medium">{appointment.full_name}</h4>
+                                <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">
+                                  {appointment.pastor?.name || 'Unassigned'}
+                                </span>
+                              </div>
+                              <p className="text-church-gold text-sm mb-1">{appointment.subject}</p>
+                              <p className="text-white/60 text-sm">
+                                {new Date(appointment.appointment_date).toLocaleString()}
+                              </p>
+                            </div>
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => {
+                                  // TODO: Implement quick approve
+                                  console.log('Quick approve:', appointment.id)
+                                }}
+                                className="p-1 text-green-400 hover:bg-green-400/10 rounded transition-colors"
+                                title="Approve"
+                              >
+                                <HiCheckCircle className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => {
+                                  // TODO: Implement quick cancel with reason
+                                  console.log('Quick cancel:', appointment.id)
+                                }}
+                                className="p-1 text-red-400 hover:bg-red-400/10 rounded transition-colors"
+                                title="Cancel"
+                              >
+                                <HiXCircle className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+
               {/* Quick Actions */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <Link
                   to="/admin/courses"
                   className="glass-card rounded-2xl p-6 hover:border-church-gold/30 transition-all group"
@@ -323,6 +400,19 @@ const AdminDashboardPage = () => {
                     <div>
                       <h3 className="font-display text-lg font-bold text-white mb-1">Manage Users</h3>
                       <p className="text-white/60 text-sm">View and manage users</p>
+                    </div>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/admin/appointments"
+                  className="glass-card rounded-2xl p-6 hover:border-church-gold/30 transition-all group"
+                >
+                  <div className="flex items-center gap-4">
+                    <HiCalendar className="w-12 h-12 text-church-gold group-hover:scale-110 transition-transform" />
+                    <div>
+                      <h3 className="font-display text-lg font-bold text-white mb-1">Manage Appointments</h3>
+                      <p className="text-white/60 text-sm">Review appointment requests</p>
                     </div>
                   </div>
                 </Link>
@@ -379,7 +469,7 @@ const AdminDashboardPage = () => {
                             <td className="p-4">
                               <div>
                                 <p className="text-white font-medium">{enrollment.course?.title || 'Unknown Course'}</p>
-                                <p className="text-white/40 text-sm">{enrollment.course?.course_type || 'N/A'}</p>
+                                <p className="text-white/40 text-sm">{getCourseTypeConfig(enrollment.course?.course_type).label || 'N/A'}</p>
                               </div>
                             </td>
                             <td className="p-4 text-white/60">

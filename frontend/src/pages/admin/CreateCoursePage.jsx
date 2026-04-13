@@ -4,12 +4,13 @@ import { HiAcademicCap, HiSave, HiArrowLeft, HiBookOpen, HiCurrencyDollar, HiClo
 import ChurchBackground from '../../components/ui/ChurchBackground'
 import { useAuth } from '../../context/AuthContext'
 import api from '../../utils/api'
+import { getCourseTypeOptions } from '../../config/courseTypes'
 
 const CreateCoursePage = () => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    course_type: 'media_training',
+    course_type: 'membership_class',
     thumbnail_url: '',
     is_published: true,
     is_free: true,
@@ -176,11 +177,11 @@ const CreateCoursePage = () => {
                         required
                         className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-church-gold focus:bg-white/15 appearance-none"
                       >
-                        <option value="media_training" className="bg-church-dark">Media Training</option>
-                        <option value="membership_class" className="bg-church-dark">Membership Class</option>
-                        <option value="workers_class" className="bg-church-dark">Workers Class</option>
-                        <option value="school_of_ministry" className="bg-church-dark">School of Ministry</option>
-                        <option value="hila" className="bg-church-dark">HILA</option>
+                        {getCourseTypeOptions().map(option => (
+                          <option key={option.value} value={option.value} className="bg-church-dark">
+                            {option.label}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { HiAcademicCap, HiClock, HiBookOpen, HiCurrencyDollar, HiCheckCircle, HiPlay, HiLogout, HiUser } from 'react-icons/hi'
+import { HiAcademicCap, HiClock, HiBookOpen, HiCurrencyDollar, HiCheckCircle, HiPlay, HiLogout, HiUser, HiCalendar, HiXCircle } from 'react-icons/hi'
 import { useAuth } from '../context/AuthContext'
 import api from '../utils/api'
 import ChurchBackground from '../components/ui/ChurchBackground'
@@ -10,6 +10,7 @@ const UserDashboardPage = () => {
   const navigate = useNavigate()
   const [enrollments, setEnrollments] = useState([])
   const [availableCourses, setAvailableCourses] = useState([])
+  const [appointments, setAppointments] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -51,6 +52,14 @@ const UserDashboardPage = () => {
       } catch (courseError) {
         console.error('Error fetching courses:', courseError)
         setAvailableCourses([]) // Set empty array on error
+      }
+      
+      try {
+        const appointmentsRes = await api.get('/appointments/my')
+        setAppointments(appointmentsRes.data || [])
+      } catch (appointmentError) {
+        console.error('Error fetching appointments:', appointmentError)
+        setAppointments([]) // Set empty array on error
       }
       
     } catch (error) {
@@ -279,6 +288,88 @@ const UserDashboardPage = () => {
               >
                 View All Courses
               </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Appointments */}
+        <div>
+          <h2 className="text-2xl font-bold mb-6 text-white">Your Appointments</h2>
+          {appointments.length === 0 ? (
+            <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-8 text-center">
+              <HiCalendar className="w-12 h-12 text-church-gold mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-white mb-2">No Appointments Yet</h3>
+              <p className="text-white/70 mb-4">You haven't booked any appointments yet.</p>
+              <Link 
+                to="/appointments"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-church-gold text-church-dark rounded-lg hover:bg-church-gold/90 transition-colors font-medium"
+              >
+                <HiCalendar className="w-4 h-4" />
+                Book an Appointment
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {appointments.map((appointment) => (
+                <div key={appointment.id} className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 hover:bg-white/15 transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-semibold text-white">
+                          {appointment.pastor?.name || 'Pastor'}
+                        </h3>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          appointment.status === 'confirmed' 
+                            ? 'bg-green-500/20 text-green-400'
+                            : appointment.status === 'pending'
+                            ? 'bg-yellow-500/20 text-yellow-400'
+                            : 'bg-red-500/20 text-red-400'
+                        }`}>
+                          {appointment.status === 'cancelled' ? 'Cancelled' : appointment.status?.charAt(0).toUpperCase() + appointment.status?.slice(1)}
+                        </span>
+                      </div>
+                      
+                      <p className="text-church-gold font-medium mb-2">{appointment.subject}</p>
+                      
+                      <div className="flex items-center gap-4 text-white/60 text-sm mb-3">
+                        <div className="flex items-center gap-1">
+                          <HiCalendar className="w-4 h-4" />
+                          {new Date(appointment.appointment_date).toLocaleDateString()}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <HiClock className="w-4 h-4" />
+                          {new Date(appointment.appointment_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                      </div>
+                      
+                      {appointment.message && (
+                        <p className="text-white/70 text-sm italic">
+                          "{appointment.message}"
+                        </p>
+                      )}
+                      
+                      {appointment.status === 'cancelled' && appointment.admin_note && (
+                        <div className="mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                          <p className="text-red-400 text-sm font-medium mb-1">Cancellation Reason:</p>
+                          <p className="text-white/80 text-sm">{appointment.admin_note}</p>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-col items-end gap-2">
+                      {appointment.status === 'confirmed' && (
+                        <HiCheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
+                      )}
+                      {appointment.status === 'cancelled' && (
+                        <HiXCircle className="w-6 h-6 text-red-400 flex-shrink-0" />
+                      )}
+                      {appointment.status === 'pending' && (
+                        <HiClock className="w-6 h-6 text-yellow-400 flex-shrink-0" />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>

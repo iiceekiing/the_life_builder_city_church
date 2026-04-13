@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { HiPlay, HiClock, HiUsers, HiCheckCircle, HiLockClosed, HiBell, HiX } from 'react-icons/hi'
+import { HiPlay, HiClock, HiUsers, HiCheckCircle, HiLockClosed, HiBell, HiX, HiInformationCircle } from 'react-icons/hi'
 import ReactPlayer from 'react-player'
 import { useAuth } from '../context/AuthContext'
 import api from '../utils/api'
 import ChurchBackground from '../components/ui/ChurchBackground'
 import toast from 'react-hot-toast'
+import { getCourseTypeConfig } from '../config/courseTypes'
 
 const CourseDetailPage = () => {
   const { id } = useParams()
@@ -438,8 +439,8 @@ const CourseDetailPage = () => {
 
                 {/* Type Badge */}
                 <div className="mt-4">
-                  <span className="inline-block px-3 py-1 bg-church-gold/20 border border-church-gold/30 rounded-full text-church-gold text-xs font-medium">
-                    {course.type?.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'General'}
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getCourseTypeConfig(course.course_type).color}`}>
+                    {getCourseTypeConfig(course.course_type).label}
                   </span>
                 </div>
               </motion.div>

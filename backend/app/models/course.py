@@ -16,6 +16,7 @@ class CourseType(str, enum.Enum):
     MEDIA_TRAINING = "media_training"
     MEMBERSHIP_CLASS = "membership_class"
     WORKERS_CLASS = "workers_class"
+    DEPARTMENTAL_TRAINING = "departmental_training"
     SCHOOL_OF_MINISTRY = "school_of_ministry"
     HILA = "hila"
 

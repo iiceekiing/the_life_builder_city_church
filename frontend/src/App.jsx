@@ -11,6 +11,23 @@ import GalleryPage from './pages/GalleryPage'
 import GivePage from './pages/GivePage'
 import AboutPage from './pages/AboutPage'
 import SermonsPage from './pages/SermonsPage'
+import CoursesPage from './pages/CoursesPage'
+import CourseAccessPage from './pages/CourseAccessPage'
+import CourseSignInPage from './pages/CourseSignInPage'
+import CourseSignUpPage from './pages/CourseSignUpPage'
+import CourseDetailPage from './pages/CourseDetailPage'
+import UserDashboardPage from './pages/UserDashboardPage'
+import AdminDashboardPage from './pages/AdminDashboardPage'
+import ManageCoursesPage from './pages/admin/ManageCoursesPage'
+import ManageUsersPage from './pages/admin/ManageUsersPage'
+import ManageAppointmentsPage from './pages/admin/ManageAppointmentsPage'
+import SettingsPage from './pages/admin/SettingsPage'
+import CreateUserPage from './pages/admin/CreateUserPage'
+import CreateCoursePage from './pages/admin/CreateCoursePage'
+import EditCoursePage from './pages/admin/EditCoursePage'
+import ShareTestimonyPage from './pages/ShareTestimonyPage'
+import TestimoniesPage from './pages/TestimoniesPage'
+import AppointmentsPage from './pages/AppointmentsPage'
 
 const DEFAULT = {
   starCount: 220,
@@ -227,7 +244,7 @@ const SimpleNavbar = () => {
             <a href="/sermons" className="text-white hover:text-church-gold transition">Sermons</a>
             <a href="/give" className="text-white hover:text-church-gold transition">Give</a>
             <a href="/about" className="text-white hover:text-church-gold transition">About</a>
-            <a href="/events" className="text-white hover:text-church-gold transition">Events</a>
+            <a href="/appointments" className="text-white hover:text-church-gold transition">Appointments</a>
             <a href="/gallery" className="text-white hover:text-church-gold transition">Gallery</a>
             <a href="/courses" className="text-white hover:text-church-gold transition">Courses</a>
           </div>
@@ -361,8 +378,25 @@ function App() {
             <MinistriesSection />
           </>} />
           <Route path="/sermons" element={<SermonsPage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/course-access" element={<CourseAccessPage />} />
+          <Route path="/courses/signin" element={<CourseSignInPage />} />
+          <Route path="/courses/signup" element={<CourseSignUpPage />} />
+          <Route path="/courses/:id" element={<CourseDetailPage />} />
+          <Route path="/dashboard" element={<UserDashboardPage />} />
+          <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/admin/courses" element={<ManageCoursesPage />} />
+          <Route path="/admin/courses/create" element={<CreateCoursePage />} />
+          <Route path="/admin/courses/:id/edit" element={<EditCoursePage />} />
+          <Route path="/admin/users" element={<ManageUsersPage />} />
+          <Route path="/admin/users/create" element={<CreateUserPage />} />
+          <Route path="/admin/appointments" element={<ManageAppointmentsPage />} />
+          <Route path="/admin/settings" element={<SettingsPage />} />
           <Route path="/give" element={<GivePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/share-testimony" element={<ShareTestimonyPage />} />
+          <Route path="/testimonies" element={<TestimoniesPage />} />
+          <Route path="/appointments" element={<AppointmentsPage />} />
           <Route path="/partner" element={
             <div className="container mx-auto px-4 py-8">
               <h2 className="text-2xl font-semibold mb-4">Partner Page</h2>

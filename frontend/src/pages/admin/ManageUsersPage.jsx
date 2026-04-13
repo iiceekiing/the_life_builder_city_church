@@ -4,6 +4,7 @@ import { HiUsers, HiPencilAlt, HiTrash, HiMail, HiPhone, HiCalendar, HiCheckCirc
 import ChurchBackground from '../../components/ui/ChurchBackground'
 import { useAuth } from '../../context/AuthContext'
 import api from '../../utils/api'
+import toast from 'react-hot-toast'
 
 const ManageUsersPage = () => {
   const [users, setUsers] = useState([])
@@ -38,28 +39,95 @@ const ManageUsersPage = () => {
   }
 
   const handleDeleteUser = async (userId) => {
-    if (!window.confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
-      return
-    }
+    const userToDelete = users.find(u => u.id === userId)
+    if (!userToDelete) return
 
-    try {
-      await api.delete(`/users/${userId}`)
-      setUsers(users.filter(user => user.id !== userId))
-    } catch (error) {
-      console.error('Error deleting user:', error)
-      setError('Failed to delete user. Please try again.')
+    // Beautiful confirmation dialog
+    const confirmed = window.confirm(
+      `⚠️ Confirm User Deletion ⚠️\n\n` +
+      `Are you sure you want to permanently delete:\n\n` +
+      `👤 ${userToDelete.full_name}\n` +
+      `📧 ${userToDelete.email}\n\n` +
+      `This action cannot be undone and will:\n` +
+      `• Remove all access to the system\n` +
+      `• Delete associated data and permissions\n` +
+      `• This action is permanent\n\n` +
+      `Type 'DELETE' to confirm, or 'CANCEL' to abort.`
+    )
+
+    if (confirmed) {
+      try {
+        await api.delete(`/users/${userId}`)
+        setUsers(users.filter(user => user.id !== userId))
+        
+        // Success notification
+        toast.success(`✅ ${userToDelete.full_name} has been deleted successfully`, {
+          duration: 5000,
+          style: {
+            background: '#10B981',
+            color: '#FFFFFF',
+            border: '1px solid #10B981',
+            borderRadius: '8px'
+          }
+        })
+        
+      } catch (error) {
+        console.error('Error deleting user:', error)
+        setError('Failed to delete user. Please try again.')
+        
+        // Error notification
+        toast.error(`❌ Failed to delete ${userToDelete.full_name}`, {
+          duration: 5000,
+          style: {
+            background: '#EF4444',
+            color: '#FFFFFF',
+            border: '1px solid #EF4444',
+            borderRadius: '8px'
+          }
+        })
+      }
     }
   }
 
   const handleToggleUserStatus = async (userId, currentStatus) => {
+    const userToUpdate = users.find(u => u.id === userId)
+    if (!userToUpdate) return
+
+    const action = currentStatus ? 'deactivated' : 'activated'
+    const statusText = currentStatus ? 'inactive' : 'active'
+    const statusEmoji = currentStatus ? '🔴' : '🟢'
+
     try {
       await api.put(`/users/${userId}`, { is_active: !currentStatus })
       setUsers(users.map(user => 
         user.id === userId ? { ...user, is_active: !currentStatus } : user
       ))
+      
+      // Success notification
+      toast.success(`${statusEmoji} User ${action} successfully`, {
+        duration: 4000,
+        style: {
+          background: currentStatus ? '#EF4444' : '#10B981',
+          color: '#FFFFFF',
+          border: '1px solid ' + (currentStatus ? '#EF4444' : '#10B981'),
+          borderRadius: '8px'
+        }
+      })
+      
     } catch (error) {
       console.error('Error updating user status:', error)
       setError('Failed to update user status. Please try again.')
+      
+      // Error notification
+      toast.error(`❌ Failed to ${action} user`, {
+        duration: 4000,
+        style: {
+          background: '#EF4444',
+          color: '#FFFFFF',
+          border: '1px solid #EF4444',
+          borderRadius: '8px'
+        }
+      })
     }
   }
 
