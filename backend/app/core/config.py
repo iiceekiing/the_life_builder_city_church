@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     SMTP_PORT: int = 587
     SMTP_USER: str = ""
     SMTP_PASSWORD: str = ""
+    SMTP_TLS: bool = True
     EMAIL_FROM: str = "noreply@lifebuildercitychurch.org"
 
     UPLOAD_DIR: str = "/app/uploads"

@@ -48,11 +48,11 @@ const Navbar = () => {
           ? 'bg-church-purple/95 backdrop-blur-lg border-b border-white/10' 
           : 'bg-transparent'
       }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-3">
-              <div className="w-32 h-32 rounded-full overflow-hidden flex items-center justify-center border-2 border-red-500">
+            <Link to="/" className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden flex items-center justify-center border-2 border-red-500">
                 <img 
                   src="/images/life-builder-city-church-logo.png" 
                   alt="Life Builder City Church Logo"
@@ -62,7 +62,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center space-x-8">
+            <div className="hidden lg:flex items-center space-x-4 lg:space-x-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -156,9 +156,9 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden fixed top-16 left-0 right-0 z-40 glass-card-gold m-4"
+            className="lg:hidden fixed top-16 left-0 right-0 z-40 glass-card-gold mx-2 sm:mx-4 mt-2 sm:mt-4"
           >
-            <div className="px-4 py-6 space-y-4">
+            <div className="px-3 sm:px-4 py-4 sm:py-6 space-y-3 sm:space-y-4">
               {/* Mobile Logo */}
               <div className="flex justify-center mb-6">
                 <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
