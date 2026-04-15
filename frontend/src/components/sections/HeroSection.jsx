@@ -207,7 +207,7 @@ const HeroSection = ({ quotes, imageOpacity = 0.28 }) => {
               Watch Sermons
             </span>
           </a>
-          <Link to="/partnership" className="inline-block px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 relative overflow-hidden group"
+          <Link to="/give" className="inline-block px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 relative overflow-hidden group"
             style={{ 
               background: 'linear-gradient(135deg, rgba(3, 11, 31, 1) 0%, rgba(3, 11, 31, 0.96) 65%, rgba(201, 149, 42, 0.45) 100%)',
               backdropFilter: 'blur(6px) brightness(0.95) saturate(0.85)',

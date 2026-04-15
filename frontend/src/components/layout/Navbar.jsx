@@ -144,15 +144,11 @@ const Navbar = () => {
               className="lg:hidden relative p-2 text-white/80 hover:text-church-gold hover:bg-white/10 rounded-lg transition-all duration-200"
               aria-label="Toggle mobile menu"
             >
-              <div className="w-6 h-6 flex flex-col justify-center items-center">
+              <div className="w-6 h-6 flex items-center justify-center">
                 {isMobileMenuOpen ? (
                   <HiX className="w-6 h-6" />
                 ) : (
-                  <>
-                    <span className="block w-6 h-0.5 bg-current transform transition-transform duration-200"></span>
-                    <span className="block w-6 h-0.5 bg-current mt-1 transform transition-transform duration-200"></span>
-                    <span className="block w-6 h-0.5 bg-current mt-1 transform transition-transform duration-200"></span>
-                  </>
+                  <HiMenu className="w-6 h-6" />
                 )}
               </div>
             </button>
