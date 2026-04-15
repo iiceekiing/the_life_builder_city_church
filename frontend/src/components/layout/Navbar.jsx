@@ -24,7 +24,7 @@ const Navbar = () => {
     { name: 'Sermons', to: '/sermons' },
     { name: 'Courses', to: '/courses' },
     { name: 'Events', to: '/events' },
-    { name: 'Book Appointment', to: '/appointments' },
+    { name: 'Appointments', to: '/appointments' },
   ]
 
   const dropdownLinks = {
@@ -34,7 +34,7 @@ const Navbar = () => {
       { name: 'Events', to: '/events' },
     ],
     'Connect': [
-      { name: 'Book Appointment', to: '/appointments' },
+      { name: 'Appointments', to: '/appointments' },
       { name: 'Give', to: '/give' },
       { name: 'About', to: '/about' },
     ],
@@ -62,12 +62,12 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center space-x-4 lg:space-x-8">
+            <div className="hidden md:flex lg:flex items-center space-x-2 md:space-x-4 lg:space-x-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.to}
-                  className={`text-sm font-medium transition-colors hover:text-church-gold ${
+                  className={`text-xs md:text-sm font-medium transition-colors hover:text-church-gold ${
                     location.pathname === link.to ? 'text-church-gold' : 'text-white/80'
                   }`}
                 >
@@ -141,8 +141,9 @@ const Navbar = () => {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden relative p-2 text-white/80 hover:text-church-gold hover:bg-white/10 rounded-lg transition-all duration-200"
+              className="md:hidden lg:hidden relative p-3 text-white/80 hover:text-church-gold hover:bg-white/10 rounded-lg transition-all duration-200 z-50"
               aria-label="Toggle mobile menu"
+              style={{ minWidth: '48px', minHeight: '48px' }}
             >
               <div className="w-6 h-6 flex items-center justify-center">
                 {isMobileMenuOpen ? (
@@ -164,7 +165,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="lg:hidden fixed top-16 left-0 right-0 z-40 glass-card-gold mx-2 sm:mx-4 mt-2 sm:mt-4 rounded-xl shadow-2xl"
+            className="md:hidden lg:hidden fixed top-16 left-0 right-0 z-40 glass-card-gold mx-2 sm:mx-4 mt-2 sm:mt-4 rounded-xl shadow-2xl"
           >
             <div className="px-3 sm:px-4 py-4 sm:py-6 space-y-3 sm:space-y-4">
               {/* Mobile Logo */}
