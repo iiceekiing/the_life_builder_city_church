@@ -141,9 +141,20 @@ const Navbar = () => {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden text-white/80 hover:text-church-gold"
+              className="lg:hidden relative p-2 text-white/80 hover:text-church-gold hover:bg-white/10 rounded-lg transition-all duration-200"
+              aria-label="Toggle mobile menu"
             >
-              {isMobileMenuOpen ? <HiX className="w-6 h-6" /> : <HiMenu className="w-6 h-6" />}
+              <div className="w-6 h-6 flex flex-col justify-center items-center">
+                {isMobileMenuOpen ? (
+                  <HiX className="w-6 h-6" />
+                ) : (
+                  <>
+                    <span className="block w-6 h-0.5 bg-current transform transition-transform duration-200"></span>
+                    <span className="block w-6 h-0.5 bg-current mt-1 transform transition-transform duration-200"></span>
+                    <span className="block w-6 h-0.5 bg-current mt-1 transform transition-transform duration-200"></span>
+                  </>
+                )}
+              </div>
             </button>
           </div>
         </div>
@@ -153,10 +164,11 @@ const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden fixed top-16 left-0 right-0 z-40 glass-card-gold mx-2 sm:mx-4 mt-2 sm:mt-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden fixed top-16 left-0 right-0 z-40 glass-card-gold mx-2 sm:mx-4 mt-2 sm:mt-4 rounded-xl shadow-2xl"
           >
             <div className="px-3 sm:px-4 py-4 sm:py-6 space-y-3 sm:space-y-4">
               {/* Mobile Logo */}
@@ -175,8 +187,10 @@ const Navbar = () => {
                   key={link.name}
                   to={link.to}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block text-sm font-medium transition-colors hover:text-church-gold ${
-                    location.pathname === link.to ? 'text-church-gold' : 'text-white/80'
+                  className={`block px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
+                    location.pathname === link.to 
+                      ? 'text-church-gold bg-church-gold/10 border border-church-gold/30' 
+                      : 'text-white/80 hover:text-church-gold hover:bg-white/5'
                   }`}
                 >
                   {link.name}
@@ -186,11 +200,11 @@ const Navbar = () => {
               {isAuthenticated ? (
                 <>
                   <div className="border-t border-white/10 pt-4">
-                    <div className="text-sm text-white/60 mb-2">Welcome, {user?.full_name}</div>
+                    <div className="text-sm text-white/60 mb-3 px-4">Welcome, {user?.full_name}</div>
                     <Link
                       to="/profile"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-sm text-white/80 hover:text-church-gold mb-2"
+                      className="block px-4 py-3 text-sm text-white/80 hover:text-church-gold hover:bg-white/5 rounded-lg transition-all duration-200 mb-2"
                     >
                       Profile
                     </Link>
@@ -198,7 +212,7 @@ const Navbar = () => {
                       <Link
                         to="/admin"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="block text-sm text-white/80 hover:text-church-gold mb-2"
+                        className="block px-4 py-3 text-sm text-white/80 hover:text-church-gold hover:bg-white/5 rounded-lg transition-all duration-200 mb-2"
                       >
                         Admin Dashboard
                       </Link>
@@ -208,25 +222,25 @@ const Navbar = () => {
                         logout()
                         setIsMobileMenuOpen(false)
                       }}
-                      className="block text-sm text-white/80 hover:text-church-gold"
+                      className="block w-full px-4 py-3 text-sm text-left text-white/80 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all duration-200"
                     >
                       Logout
                     </button>
                   </div>
                 </>
               ) : (
-                <div className="border-t border-white/10 pt-4 space-y-2">
+                <div className="border-t border-white/10 pt-4 space-y-3 px-4">
                   <Link
                     to="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block text-sm font-medium text-white/80 hover:text-church-gold"
+                    className="block px-4 py-3 text-sm font-medium text-white/80 hover:text-church-gold hover:bg-white/5 rounded-lg transition-all duration-200 text-center"
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="btn-gold text-sm w-full"
+                    className="btn-gold text-sm w-full text-center"
                   >
                     Sign Up
                   </Link>
