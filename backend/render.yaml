@@ -18,7 +18,7 @@ services:
           name: life-builders-db
           property: connectionString
       - key: CORS_ORIGINS
-        value: https://your-frontend-url.vercel.app,https://localhost:3000
+        value: '["https://the-life-builder-city-church.vercel.app","https://localhost:3000","https://localhost:5173"]'
 
 databases:
   - name: life-builders-db
